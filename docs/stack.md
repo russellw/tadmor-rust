@@ -131,12 +131,14 @@ it still runs.
 
 `sqlx-macros` checks every `query!` against a live database at compile
 time, or, with `SQLX_OFFLINE=true`, against query metadata committed under
-`.sqlx/`. The build always uses the committed metadata, so it needs no
-database and no network. The metadata is regenerated against a scratch
-database whenever a query changes. `sqlx-cli` is not adopted: it would add
-a large build-time tree only to wrap a `cargo check` run with
-`SQLX_OFFLINE_DIR` set. (That the macros write the metadata themselves
-when that variable is set is still to be confirmed on the first query.)
+`.sqlx/`. `.cargo/config.toml` sets `SQLX_OFFLINE=true`, so the build
+always uses the committed metadata and needs no database and no network.
+`tools/sqlx-prepare.sh` (`make sqlx-prepare`) regenerates it. It rebuilds
+a scratch database from `db/migrations/` with `psql`, then runs `cargo
+check` with `SQLX_OFFLINE_DIR` set, which makes the macros write one file
+per query. That is all `sqlx-cli`'s `cargo sqlx prepare` does, so
+`sqlx-cli` is not adopted: it would add a large build-time tree for
+nothing.
 
 ## Permitted packages
 

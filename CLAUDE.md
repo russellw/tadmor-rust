@@ -33,6 +33,9 @@ Rust as text (::numeric in, ::text out); never let an f32 or f64 near an amount.
 Run every database session in UTC.
 spec/, conformance/, and db/migrations/ are copies from tadmor (spec/UPSTREAM);
 never edit them here. Re-export from tadmor with spec/export.sh.
+Queries go through sqlx::query! and friends, checked at build time against .sqlx/.
+After adding or changing one, run `make sqlx-prepare` and commit .sqlx/ with the code.
+Before committing, run `make check` and `make test`; both must pass.
 
 Version control:
 Commit directly to the default branch. Do not create feature branches.

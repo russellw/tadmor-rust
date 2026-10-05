@@ -1,10 +1,37 @@
-use axum::{Router, routing::get};
+use std::error::Error;
+use std::process::ExitCode;
+
+use tadmor::config::Config;
+use tadmor::db;
+use tadmor::http::{AppState, router};
 
 #[tokio::main]
-async fn main() {
-    let addr = std::env::var("HTTP_ADDR").unwrap_or_else(|_| "127.0.0.1:8080".to_string());
-    let app = Router::new().route("/healthz", get(|| async { "ok" }));
-    let listener = tokio::net::TcpListener::bind(&addr).await.expect("bind");
-    eprintln!("listening on {addr}");
-    axum::serve(listener, app).await.expect("serve");
+async fn main() -> ExitCode {
+    match run().await {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(err) => {
+            eprintln!("tadmor: {err}");
+            ExitCode::FAILURE
+        }
+    }
+}
+
+/// Applies any pending migrations, then serves until SIGINT or SIGTERM.
+async fn run() -> Result<(), Box<dyn Error>> {
+    let config = Config::from_env()?;
+    let pool = db::connect(&config.database_url).await?;
+    db::migrate(&pool).await?;
+    let addr = config.listen_addr();
+    let listener = tokio::net::TcpListener::bind(&addr).await?;
+    eprintln!("tadmor: listening on {addr}");
+    axum::serve(listener, router(AppState { pool })).with_graceful_shutdown(shutdown()).await?;
+    Ok(())
+}
+
+async fn shutdown() {
+    let mut term = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate()).expect("SIGTERM handler");
+    tokio::select! {
+        _ = tokio::signal::ctrl_c() => {}
+        _ = term.recv() => {}
+    }
 }
