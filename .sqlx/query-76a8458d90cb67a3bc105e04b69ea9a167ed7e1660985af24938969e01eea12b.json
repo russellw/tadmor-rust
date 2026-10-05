@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE warehouses SET code = $2, name = $3, address_id = $4::int8, is_active = $5 WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Text",
+        "Text",
+        "Int8",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "76a8458d90cb67a3bc105e04b69ea9a167ed7e1660985af24938969e01eea12b"
+}

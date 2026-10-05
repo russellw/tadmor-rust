@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO fiscal_years (name, start_date, end_date) VALUES ($1, $2::text::date, $3::text::date) RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "f06e9b3e7b5b95d9ea6e5070eaebc83ffeccfb0a565b3dfedb8a426010d251ac"
+}

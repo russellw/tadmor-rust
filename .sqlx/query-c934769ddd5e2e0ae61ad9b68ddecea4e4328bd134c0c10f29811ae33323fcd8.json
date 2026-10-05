@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO tax_codes (code, name, rate, tax_account_id) VALUES ($1, $2, $3::text::numeric, $4::int8)\n         RETURNING code",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "code",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "c934769ddd5e2e0ae61ad9b68ddecea4e4328bd134c0c10f29811ae33323fcd8"
+}

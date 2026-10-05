@@ -1,0 +1,21 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE suppliers SET organization_id = $2::int8, supplier_number = $3, ap_account_id = $4::int8,\n                 payment_terms_code = $5, currency_code = $6, tax_code = $7, is_active = $8\n             WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8",
+        "Text",
+        "Int8",
+        "Text",
+        "Bpchar",
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a65d0dbdeebb6e79778474fb367ecdff4a8a7e791c92fc73379f5d1657ff68bf"
+}

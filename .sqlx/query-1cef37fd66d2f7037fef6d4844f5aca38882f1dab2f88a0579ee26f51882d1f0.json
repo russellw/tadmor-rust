@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE payment_terms SET name = $2, due_days = $3 WHERE code = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "1cef37fd66d2f7037fef6d4844f5aca38882f1dab2f88a0579ee26f51882d1f0"
+}

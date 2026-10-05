@@ -122,3 +122,27 @@ pub async fn get(app: Router, path: &str) -> (StatusCode, Value) {
     let r = Client::new(app).get(path).await;
     (r.status, r.body)
 }
+
+/// A client logged in as a fresh administrator of its own.
+pub async fn admin() -> Client {
+    let pool = pool().await;
+    let email = email("admin");
+    user(&pool, &email, "admin password", true).await;
+    let mut c = Client::new(router(AppState { pool }));
+    c.login(&email, "admin password").await;
+    c
+}
+
+/// A unique short code for a test's own records (SKUs, account codes, names).
+pub fn code(tag: &str) -> String {
+    static N: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
+    let n = N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    format!("{tag}{}x{n}", std::process::id())
+}
+
+/// POSTs and returns the new record's id, panicking unless it is a 201.
+pub async fn create(c: &mut Client, path: &str, body: Value) -> i64 {
+    let r = c.post(path, body.clone()).await;
+    assert_eq!(r.status, StatusCode::CREATED, "POST {path} {body}: {}", r.body);
+    r.body["id"].as_i64().unwrap()
+}

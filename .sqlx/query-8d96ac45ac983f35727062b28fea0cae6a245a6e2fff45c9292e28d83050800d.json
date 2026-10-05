@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE products SET sku = $2, name = $3, description = $4, unit_price = $5::text::numeric,\n                 currency_code = $6, revenue_account_id = $7::int8, tax_code = $8, track_inventory = $9,\n                 inventory_account_id = $10::int8, cogs_account_id = $11::int8, is_active = $12\n             WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Bpchar",
+        "Int8",
+        "Text",
+        "Bool",
+        "Int8",
+        "Int8",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "8d96ac45ac983f35727062b28fea0cae6a245a6e2fff45c9292e28d83050800d"
+}

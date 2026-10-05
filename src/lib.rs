@@ -2,13 +2,17 @@
 //! specified by spec/ and checked by conformance/, on Axum, SQLx and Askama
 //! (docs/stack.md).
 //!
-//! Business rules live in the service modules (auth, users, and those to
-//! come), shared by the JSON API and the UI in http. Services return
+//! Business rules live in the service modules (auth, users, master,
+//! calendar, currency, reporting, and those to come), shared by the JSON API and the UI in http. Services return
 //! `error::Error`, which carries the spec's HTTP status.
 
 pub mod auth;
+pub mod calendar;
 pub mod config;
+pub mod currency;
 pub mod db;
 pub mod error;
 pub mod http;
+pub mod master;
+pub mod reporting;
 pub mod users;

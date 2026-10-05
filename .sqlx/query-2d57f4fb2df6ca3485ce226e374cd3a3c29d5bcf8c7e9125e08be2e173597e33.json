@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM exchange_rates WHERE currency_code = upper($1) AND rate_date::text = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2d57f4fb2df6ca3485ce226e374cd3a3c29d5bcf8c7e9125e08be2e173597e33"
+}

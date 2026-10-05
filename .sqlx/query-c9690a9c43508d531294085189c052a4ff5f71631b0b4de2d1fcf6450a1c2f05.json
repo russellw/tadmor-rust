@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT base_currency, fx_gain_loss_account_id::int8 AS fx_gain_loss_account_id FROM gl_settings",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "base_currency",
+        "type_info": "Bpchar"
+      },
+      {
+        "ordinal": 1,
+        "name": "fx_gain_loss_account_id",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      null
+    ]
+  },
+  "hash": "c9690a9c43508d531294085189c052a4ff5f71631b0b4de2d1fcf6450a1c2f05"
+}

@@ -1,0 +1,62 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, name, legal_name, tax_id, country_code, default_currency, email, is_self\n         FROM organizations ORDER BY name",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "legal_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "tax_id",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "country_code",
+        "type_info": "Bpchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "default_currency",
+        "type_info": "Bpchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "email",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "is_self",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "dbd08dca274d96aab9f321382281136bcac440f37760ec5dca3281c716441f7f"
+}

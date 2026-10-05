@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO accounting_periods (fiscal_year_id, name, start_date, end_date)\n         VALUES ($1::int8, $2, $3::text::date, $4::text::date) RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "b2b036cfed0d2213b0507711677fa5cb11c382984166ea11be069857bdc83249"
+}

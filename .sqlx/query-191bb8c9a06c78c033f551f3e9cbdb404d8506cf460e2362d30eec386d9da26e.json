@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE customers SET organization_id = $2::int8, customer_number = $3, ar_account_id = $4::int8,\n                 payment_terms_code = $5, currency_code = $6, tax_code = $7,\n                 credit_limit = $8::text::numeric, is_active = $9\n             WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8",
+        "Text",
+        "Int8",
+        "Text",
+        "Bpchar",
+        "Text",
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "191bb8c9a06c78c033f551f3e9cbdb404d8506cf460e2362d30eec386d9da26e"
+}

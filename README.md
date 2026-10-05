@@ -7,13 +7,17 @@ Askama templates so the stacks can be compared. See
 [`docs/stack.md`](docs/stack.md) for why this stack, and what it costs.
 
 Status: in progress. The server applies the shared schema, answers the
-probes, and implements sessions (`/api/auth/*`) and user administration
-(`/api/users`). The rest of the JSON API and the UI are still to come.
+probes, and implements sessions and users (spec/api.md §3, §5.1), master
+data (§5.2 to §5.6), the fiscal calendar apart from year-end close
+(§5.7), settings and exchange rates (§5.8), and the account ledger.
+Documents, posting, orders, inventory, banking, reports, and the UI are
+still to come.
 
 ## Layout
 
 ```
-src/               the server: services (auth, users) holding the business
+src/               the server: services (auth, users, master, calendar,
+                   currency, reporting) holding the business
                    rules, http/ (routes, extractors, session middleware),
                    error (the API's error type), db, config
 tests/             integration tests, driving the router in-process

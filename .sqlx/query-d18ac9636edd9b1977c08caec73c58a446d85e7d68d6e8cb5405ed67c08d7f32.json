@@ -1,0 +1,86 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, sku, name, description, unit_price::text AS \"unit_price!\", currency_code,\n               revenue_account_id, tax_code, track_inventory, inventory_account_id, cogs_account_id, is_active\n           FROM products ORDER BY sku",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "sku",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "unit_price!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "currency_code",
+        "type_info": "Bpchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "revenue_account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 7,
+        "name": "tax_code",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "track_inventory",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 9,
+        "name": "inventory_account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 10,
+        "name": "cogs_account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 11,
+        "name": "is_active",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      null,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "d18ac9636edd9b1977c08caec73c58a446d85e7d68d6e8cb5405ed67c08d7f32"
+}

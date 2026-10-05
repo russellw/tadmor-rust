@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE exchange_rates SET rate = $3::text::numeric\n         WHERE currency_code = upper($1) AND rate_date::text = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "652592d1f242619d08d2cfb3780b0948a255d483d8fca5705e04f7a6c378eee6"
+}

@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE tax_codes SET name = $2, rate = $3::text::numeric, tax_account_id = $4::int8, is_active = $5\n             WHERE code = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text",
+        "Int8",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a7ea5dbcf2ccb734515ee4e3429bdfe11f13757ad66fc685333bfb9a505514ff"
+}

@@ -1,0 +1,62 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, organization_id, supplier_number, ap_account_id, payment_terms_code, currency_code,\n             tax_code, is_active\n         FROM suppliers ORDER BY id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "organization_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "supplier_number",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "ap_account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 4,
+        "name": "payment_terms_code",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "currency_code",
+        "type_info": "Bpchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "tax_code",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "is_active",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "07e1eee757df75b971c65e2f29b34f3f895e78529cb398dc611ccc871de52e68"
+}

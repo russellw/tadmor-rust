@@ -1,0 +1,72 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT je.id AS journal_entry_id, je.entry_date::text AS \"entry_date!\", je.reference,\n               COALESCE(jl.memo, je.memo) AS memo, je.currency_code,\n               jl.debit::text AS \"debit!\", jl.credit::text AS \"credit!\",\n               jl.base_debit::text AS \"base_debit!\", jl.base_credit::text AS \"base_credit!\"\n           FROM journal_lines jl\n           JOIN journal_entries je ON je.id = jl.journal_entry_id\n           WHERE jl.account_id = $1::int8 AND je.status = 'posted'\n             AND ($2::text IS NULL OR je.entry_date >= $2::text::date)\n             AND ($3::text IS NULL OR je.entry_date <= $3::text::date)\n           ORDER BY je.entry_date, je.id, jl.line_no",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "journal_entry_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "entry_date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "reference",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "memo",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "currency_code",
+        "type_info": "Bpchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "debit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "credit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "base_debit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "base_credit!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      null,
+      true,
+      null,
+      false,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "edf0b03206ac3f7090f78a3560e83f5a185afd3666e3fc608c05ed67d6c0b0cf"
+}
