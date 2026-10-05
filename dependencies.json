@@ -1,0 +1,2041 @@
+{
+ "format": "tadmor-dependencies/1",
+ "generator": "tools/vendor.py manifest (tadmor-rust)",
+ "platform": "linux/x64",
+ "toolchains": [
+  "Rust 1.93.1 and Cargo (Ubuntu's rustc and cargo packages)"
+ ],
+ "packages": [
+  {
+   "ecosystem": "crates.io",
+   "name": "askama_derive",
+   "version": "0.16.1",
+   "category": "build",
+   "identities": [
+    "crates.io:GuillaumeGomez",
+    "crates.io:Kijewski",
+    "crates.io:djc",
+    "crates.io:github:askama-rs:maintainer"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/askama_derive/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "askama_macros",
+   "version": "0.16.1",
+   "category": "build",
+   "identities": [
+    "crates.io:GuillaumeGomez"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/askama_macros/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "askama_parser",
+   "version": "0.16.1",
+   "category": "build",
+   "identities": [
+    "crates.io:Kijewski",
+    "crates.io:djc",
+    "crates.io:github:askama-rs:maintainer"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/askama_parser/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "async-trait",
+   "version": "0.1.92",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/async-trait/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "autocfg",
+   "version": "1.5.1",
+   "category": "build",
+   "identities": [
+    "crates.io:cuviper",
+    "crates.io:matklad"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/autocfg/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "basic-toml",
+   "version": "0.1.10",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/basic-toml/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "cc",
+   "version": "1.5.1",
+   "category": "build",
+   "identities": [
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/cc/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "displaydoc",
+   "version": "0.2.7",
+   "category": "build",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:yaahc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/displaydoc/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "find-msvc-tools",
+   "version": "0.1.14",
+   "category": "build",
+   "identities": [
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/find-msvc-tools/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "glob",
+   "version": "0.3.4",
+   "category": "build",
+   "identities": [
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/glob/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "heck",
+   "version": "0.5.0",
+   "category": "build",
+   "identities": [
+    "crates.io:jplatte",
+    "crates.io:withoutboats"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/heck/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "openssl-macros",
+   "version": "0.1.1",
+   "category": "build",
+   "identities": [
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/openssl-macros/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "pkg-config",
+   "version": "0.3.34",
+   "category": "build",
+   "identities": [
+    "crates.io:joshtriplett",
+    "crates.io:rust-lang-owner",
+    "crates.io:sdroege"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/pkg-config/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "proc-macro2",
+   "version": "1.0.107",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/proc-macro2/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "quote",
+   "version": "1.0.47",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/quote/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "rustc-hash",
+   "version": "2.1.3",
+   "category": "build",
+   "identities": [
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/rustc-hash/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "serde_derive",
+   "version": "1.0.229",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay",
+    "crates.io:github:serde-rs:publish"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/serde_derive/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "shlex",
+   "version": "2.0.1",
+   "category": "build",
+   "identities": [
+    "crates.io:comex",
+    "crates.io:fenhl"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/shlex/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sqlx-macros",
+   "version": "0.8.6",
+   "category": "build",
+   "identities": [
+    "crates.io:abonander",
+    "crates.io:mehcode"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sqlx-macros/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sqlx-macros-core",
+   "version": "0.8.6",
+   "category": "build",
+   "identities": [
+    "crates.io:abonander"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sqlx-macros-core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "syn",
+   "version": "2.0.119",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/syn/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "syn",
+   "version": "3.0.6",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/syn/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "synstructure",
+   "version": "0.13.2",
+   "category": "build",
+   "identities": [
+    "crates.io:mystor"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/synstructure/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "synstructure",
+   "version": "0.14.0",
+   "category": "build",
+   "identities": [
+    "crates.io:mystor"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/synstructure/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "thiserror-impl",
+   "version": "2.0.21",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/thiserror-impl/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tokio-macros",
+   "version": "2.7.2",
+   "category": "build",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tokio-macros/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tracing-attributes",
+   "version": "0.1.31",
+   "category": "build",
+   "identities": [
+    "crates.io:github:tokio-rs:publish-tracing",
+    "crates.io:hawkw"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tracing-attributes/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "unicode-ident",
+   "version": "1.0.26",
+   "category": "build",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/unicode-ident/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "vcpkg",
+   "version": "0.2.15",
+   "category": "build",
+   "identities": [
+    "crates.io:github:rust-bus:maintainers",
+    "crates.io:kornelski",
+    "crates.io:mcgoo",
+    "crates.io:pkgw",
+    "crates.io:waych"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/vcpkg/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "version_check",
+   "version": "0.9.5",
+   "category": "build",
+   "identities": [
+    "crates.io:SergioBenitez"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/version_check/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "winnow",
+   "version": "1.0.4",
+   "category": "build",
+   "identities": [
+    "crates.io:epage"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/winnow/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "yoke-derive",
+   "version": "0.8.2",
+   "category": "build",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/yoke-derive/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zerofrom-derive",
+   "version": "0.1.8",
+   "category": "build",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zerofrom-derive/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zerovec-derive",
+   "version": "0.11.6",
+   "category": "build",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zerovec-derive/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "allocator-api2",
+   "version": "0.2.21",
+   "category": "runtime",
+   "identities": [
+    "crates.io:zakarumych"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/allocator-api2/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "askama",
+   "version": "0.16.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:GuillaumeGomez",
+    "crates.io:Kijewski",
+    "crates.io:djc",
+    "crates.io:github:askama-rs:maintainer"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/askama/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "atoi",
+   "version": "2.0.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:pacman82"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/atoi/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "atomic-waker",
+   "version": "1.1.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:smol-rs:admins",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/atomic-waker/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "axum",
+   "version": "0.8.9",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:davidpdrsn",
+    "crates.io:github:tokio-rs:axum-release",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/axum/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "axum-core",
+   "version": "0.5.6",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:davidpdrsn",
+    "crates.io:github:tokio-rs:axum-release",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/axum-core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "base64",
+   "version": "0.22.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:alicemaz",
+    "crates.io:marshallpierce"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/base64/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "base64",
+   "version": "0.23.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:alicemaz",
+    "crates.io:marshallpierce"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/base64/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "bitflags",
+   "version": "2.13.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:KodrAus",
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/bitflags/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "block-buffer",
+   "version": "0.10.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/block-buffer/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "block-buffer",
+   "version": "0.12.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/block-buffer/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "byteorder",
+   "version": "1.5.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:BurntSushi"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/byteorder/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "bytes",
+   "version": "1.12.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Darksonn",
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/bytes/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "cfg-if",
+   "version": "1.0.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/cfg-if/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "cmov",
+   "version": "0.5.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/cmov/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "const-oid",
+   "version": "0.10.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:formats",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/const-oid/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "cpufeatures",
+   "version": "0.2.17",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/cpufeatures/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "cpufeatures",
+   "version": "0.3.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/cpufeatures/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "crc",
+   "version": "3.4.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:akhilles",
+    "crates.io:mrhooray"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/crc/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "crc-catalog",
+   "version": "2.5.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:akhilles"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/crc-catalog/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "crossbeam-queue",
+   "version": "0.3.14",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:github:crossbeam-rs:admins",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/crossbeam-queue/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "crossbeam-utils",
+   "version": "0.8.23",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:github:crossbeam-rs:admins",
+    "crates.io:jeehoonkang",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/crossbeam-utils/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "crypto-common",
+   "version": "0.1.7",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:traits",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/crypto-common/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "crypto-common",
+   "version": "0.2.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:traits",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/crypto-common/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "ctutils",
+   "version": "0.4.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/ctutils/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "digest",
+   "version": "0.10.7",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:traits",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/digest/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "digest",
+   "version": "0.11.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:traits",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/digest/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "dotenvy",
+   "version": "0.15.7",
+   "category": "runtime",
+   "identities": [
+    "crates.io:allan2"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/dotenvy/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "either",
+   "version": "1.18.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:bluss",
+    "crates.io:cuviper",
+    "crates.io:jswrenn"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/either/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "email-encoding",
+   "version": "0.4.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:lettre:release",
+    "crates.io:paolobarbolini"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/email-encoding/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "email_address",
+   "version": "0.2.9",
+   "category": "runtime",
+   "identities": [
+    "crates.io:johnstonskj"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/email_address/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "equivalent",
+   "version": "1.0.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cuviper"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/equivalent/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "errno",
+   "version": "0.3.14",
+   "category": "runtime",
+   "identities": [
+    "crates.io:lambda-fairy",
+    "crates.io:sunfishcode"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/errno/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "event-listener",
+   "version": "5.4.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:smol-rs:admins",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/event-listener/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "fastrand",
+   "version": "2.5.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:smol-rs:admins",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/fastrand/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "foldhash",
+   "version": "0.1.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:orlp"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/foldhash/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "foreign-types",
+   "version": "0.3.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/foreign-types/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "foreign-types-shared",
+   "version": "0.1.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/foreign-types-shared/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "form_urlencoded",
+   "version": "1.2.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:SimonSapin",
+    "crates.io:github:servo:cargo-publish",
+    "crates.io:github:servo:rust-url"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/form_urlencoded/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-channel",
+   "version": "0.3.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cramertj",
+    "crates.io:rust-lang-owner",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-channel/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-core",
+   "version": "0.3.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cramertj",
+    "crates.io:rust-lang-owner",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-intrusive",
+   "version": "0.5.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Matthias247",
+    "crates.io:djc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-intrusive/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-io",
+   "version": "0.3.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cramertj",
+    "crates.io:rust-lang-owner",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-io/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-sink",
+   "version": "0.3.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cramertj",
+    "crates.io:rust-lang-owner",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-sink/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-task",
+   "version": "0.3.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cramertj",
+    "crates.io:rust-lang-owner",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-task/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "futures-util",
+   "version": "0.3.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cramertj",
+    "crates.io:rust-lang-owner",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/futures-util/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "generic-array",
+   "version": "0.14.7",
+   "category": "runtime",
+   "identities": [
+    "crates.io:fizyk20",
+    "crates.io:novacrazy"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/generic-array/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "getrandom",
+   "version": "0.2.17",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dhardy",
+    "crates.io:github:rust-random:maintainers"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/getrandom/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hashbrown",
+   "version": "0.15.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hashbrown/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hashbrown",
+   "version": "0.17.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hashbrown/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hashlink",
+   "version": "0.10.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:djc",
+    "crates.io:kyren"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hashlink/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hex",
+   "version": "0.4.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:KokaKiwi"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hex/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hkdf",
+   "version": "0.12.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:kdfs",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hkdf/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hmac",
+   "version": "0.12.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:macs",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hmac/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hmac",
+   "version": "0.13.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:macs",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hmac/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "home",
+   "version": "0.5.12",
+   "category": "runtime",
+   "identities": [
+    "crates.io:rust-lang-owner",
+    "crates.io:weihanglo"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/home/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "http",
+   "version": "1.5.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/http/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "http-body",
+   "version": "1.1.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:hyperium:http-util",
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/http-body/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "http-body-util",
+   "version": "0.1.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/http-body-util/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "httparse",
+   "version": "1.10.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/httparse/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "httpdate",
+   "version": "1.0.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:pyfisch"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/httpdate/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hybrid-array",
+   "version": "0.4.15",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:utils",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hybrid-array/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hyper",
+   "version": "1.11.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:hyperium:core",
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hyper/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "hyper-util",
+   "version": "0.1.21",
+   "category": "runtime",
+   "identities": [
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/hyper-util/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_collections",
+   "version": "2.3.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_collections/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_locale_core",
+   "version": "2.3.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_locale_core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_normalizer",
+   "version": "2.3.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_normalizer/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_normalizer_data",
+   "version": "2.3.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_normalizer_data/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_properties",
+   "version": "2.3.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_properties/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_properties_data",
+   "version": "2.3.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_properties_data/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "icu_provider",
+   "version": "2.3.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:zbraniecki"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/icu_provider/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "idna",
+   "version": "1.1.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:SimonSapin",
+    "crates.io:github:servo:cargo-publish",
+    "crates.io:github:servo:rust-url"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/idna/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "idna_adapter",
+   "version": "1.2.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:hsivonen",
+    "crates.io:valenting"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/idna_adapter/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "indexmap",
+   "version": "2.14.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:bluss",
+    "crates.io:cuviper"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/indexmap/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "itoa",
+   "version": "1.0.18",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/itoa/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "lettre",
+   "version": "0.11.23",
+   "category": "runtime",
+   "identities": [
+    "crates.io:amousset",
+    "crates.io:github:lettre:release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/lettre/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "libc",
+   "version": "0.2.189",
+   "category": "runtime",
+   "identities": [
+    "crates.io:rust-lang-owner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/libc/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "litemap",
+   "version": "0.8.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/litemap/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "lock_api",
+   "version": "0.4.14",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:faern"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/lock_api/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "log",
+   "version": "0.4.34",
+   "category": "runtime",
+   "identities": [
+    "crates.io:KodrAus",
+    "crates.io:github:rust-lang-nursery:log-owners",
+    "crates.io:huonw",
+    "crates.io:rust-lang-owner",
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/log/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "matchit",
+   "version": "0.8.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:ibraheemdev"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/matchit/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "md-5",
+   "version": "0.10.6",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:hashes",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/md-5/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "memchr",
+   "version": "2.8.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:BurntSushi"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/memchr/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "mime",
+   "version": "0.3.17",
+   "category": "runtime",
+   "identities": [
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/mime/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "mio",
+   "version": "1.2.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:mio-core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/mio/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "native-tls",
+   "version": "0.2.18",
+   "category": "runtime",
+   "identities": [
+    "crates.io:kornelski",
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/native-tls/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "nom",
+   "version": "8.0.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Geal"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/nom/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "num-traits",
+   "version": "0.2.19",
+   "category": "runtime",
+   "identities": [
+    "crates.io:cuviper"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/num-traits/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "once_cell",
+   "version": "1.21.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:matklad",
+    "crates.io:vorner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/once_cell/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "openssl",
+   "version": "0.10.81",
+   "category": "runtime",
+   "identities": [
+    "crates.io:alex",
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/openssl/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "openssl-probe",
+   "version": "0.2.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:alexcrichton",
+    "crates.io:djc",
+    "crates.io:github:rustls:publishers"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/openssl-probe/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "openssl-sys",
+   "version": "0.9.117",
+   "category": "runtime",
+   "identities": [
+    "crates.io:alex",
+    "crates.io:alexcrichton",
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/openssl-sys/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "parking",
+   "version": "2.2.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:smol-rs:admins",
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/parking/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "parking_lot",
+   "version": "0.12.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:faern"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/parking_lot/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "parking_lot_core",
+   "version": "0.9.12",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:faern"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/parking_lot_core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "pbkdf2",
+   "version": "0.13.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:kdfs",
+    "crates.io:newpavlov"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/pbkdf2/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "percent-encoding",
+   "version": "2.3.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:SimonSapin",
+    "crates.io:github:servo:cargo-publish",
+    "crates.io:github:servo:rust-url"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/percent-encoding/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "pin-project-lite",
+   "version": "0.2.17",
+   "category": "runtime",
+   "identities": [
+    "crates.io:taiki-e"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/pin-project-lite/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "potential_utf",
+   "version": "0.1.6",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/potential_utf/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "ppv-lite86",
+   "version": "0.2.21",
+   "category": "runtime",
+   "identities": [
+    "crates.io:kazcw"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/ppv-lite86/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "quoted_printable",
+   "version": "0.5.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:staktrace"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/quoted_printable/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "rand",
+   "version": "0.8.8",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dhardy",
+    "crates.io:github:rust-random:maintainers"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/rand/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "rand_chacha",
+   "version": "0.3.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dhardy",
+    "crates.io:github:rust-random:maintainers"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/rand_chacha/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "rand_core",
+   "version": "0.6.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dhardy",
+    "crates.io:github:rust-random:maintainers"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/rand_core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "ryu",
+   "version": "1.0.23",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/ryu/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "scopeguard",
+   "version": "1.2.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Amanieu",
+    "crates.io:bluss"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/scopeguard/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "serde",
+   "version": "1.0.229",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay",
+    "crates.io:github:serde-rs:publish"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/serde/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "serde_core",
+   "version": "1.0.229",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay",
+    "crates.io:github:serde-rs:publish"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/serde_core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "serde_json",
+   "version": "1.0.151",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay",
+    "crates.io:github:serde-rs:publish"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/serde_json/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "serde_path_to_error",
+   "version": "0.1.20",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/serde_path_to_error/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "serde_urlencoded",
+   "version": "0.7.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:nox"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/serde_urlencoded/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sha2",
+   "version": "0.10.9",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:hashes",
+    "crates.io:newpavlov",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sha2/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sha2",
+   "version": "0.11.0",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rustcrypto:hashes",
+    "crates.io:newpavlov",
+    "crates.io:tarcieri"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sha2/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "signal-hook-registry",
+   "version": "1.4.8",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:rust-bus:maintainers",
+    "crates.io:vorner"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/signal-hook-registry/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "slab",
+   "version": "0.4.12",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/slab/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "smallvec",
+   "version": "1.16.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Ms2ger",
+    "crates.io:SimonSapin",
+    "crates.io:github:servo:cargo-publish"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/smallvec/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "socket2",
+   "version": "0.6.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Thomasdezeeuw",
+    "crates.io:github:tokio-rs:socket2",
+    "crates.io:rust-lang-owner",
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/socket2/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sqlx",
+   "version": "0.8.6",
+   "category": "runtime",
+   "identities": [
+    "crates.io:abonander",
+    "crates.io:mehcode"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sqlx/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sqlx-core",
+   "version": "0.8.6",
+   "category": "runtime",
+   "identities": [
+    "crates.io:abonander",
+    "crates.io:mehcode"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sqlx-core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sqlx-postgres",
+   "version": "0.8.6",
+   "category": "runtime",
+   "identities": [
+    "crates.io:abonander",
+    "crates.io:mehcode"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sqlx-postgres/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "stable_deref_trait",
+   "version": "1.2.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Kimundi",
+    "crates.io:Storyyeller",
+    "crates.io:jpernst"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/stable_deref_trait/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "stringprep",
+   "version": "0.1.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:sfackler"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/stringprep/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "subtle",
+   "version": "2.6.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:dalek-cryptography:subtle-maintainers",
+    "crates.io:isislovecruft"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/subtle/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "sync_wrapper",
+   "version": "1.0.2",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:actyx:developers",
+    "crates.io:rkuhn"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/sync_wrapper/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "thiserror",
+   "version": "2.0.21",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/thiserror/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tinystr",
+   "version": "0.8.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:raphlinus",
+    "crates.io:zbraniecki"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tinystr/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tinyvec",
+   "version": "1.13.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Lokathor",
+    "crates.io:github:rust-bus:maintainers"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tinyvec/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tokio",
+   "version": "1.53.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Darksonn",
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tokio/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tokio-native-tls",
+   "version": "0.3.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:LucioFranco",
+    "crates.io:github:tokio-rs:tls"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tokio-native-tls/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tokio-stream",
+   "version": "0.1.19",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Darksonn",
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:core"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tokio-stream/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tower",
+   "version": "0.5.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tower-rs:publish",
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tower/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tower-layer",
+   "version": "0.3.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tower-rs:publish"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tower-layer/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tower-service",
+   "version": "0.3.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tower-rs:publish",
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tower-service/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tracing",
+   "version": "0.1.44",
+   "category": "runtime",
+   "identities": [
+    "crates.io:carllerche",
+    "crates.io:github:tokio-rs:publish-tracing",
+    "crates.io:hawkw"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tracing/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "tracing-core",
+   "version": "0.1.36",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:tokio-rs:publish-tracing",
+    "crates.io:hawkw"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/tracing-core/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "typenum",
+   "version": "1.20.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:paholg"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/typenum/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "unicode-bidi",
+   "version": "0.3.18",
+   "category": "runtime",
+   "identities": [
+    "crates.io:SimonSapin",
+    "crates.io:behnam",
+    "crates.io:github:servo:cargo-publish",
+    "crates.io:larsbergstrom",
+    "crates.io:mbrubeck",
+    "crates.io:metajack"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/unicode-bidi/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "unicode-normalization",
+   "version": "0.1.25",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:SimonSapin",
+    "crates.io:huonw",
+    "crates.io:kwantam",
+    "crates.io:sujayakar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/unicode-normalization/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "unicode-properties",
+   "version": "0.1.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/unicode-properties/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "url",
+   "version": "2.5.8",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Hoverbear",
+    "crates.io:SimonSapin",
+    "crates.io:github:servo:cargo-publish",
+    "crates.io:github:servo:rust-url",
+    "crates.io:seanmonstar"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/url/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "utf8_iter",
+   "version": "1.0.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:hsivonen"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/utf8_iter/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "whoami",
+   "version": "1.6.1",
+   "category": "runtime",
+   "identities": [
+    "crates.io:AldaronLau",
+    "crates.io:github:ardaku:cala"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/whoami/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "writeable",
+   "version": "0.6.4",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:zbraniecki"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/writeable/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "yoke",
+   "version": "0.8.3",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/yoke/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zerocopy",
+   "version": "0.8.59",
+   "category": "runtime",
+   "identities": [
+    "crates.io:joshlf",
+    "crates.io:jswrenn"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zerocopy/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zerofrom",
+   "version": "0.1.8",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zerofrom/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zerotrie",
+   "version": "0.2.5",
+   "category": "runtime",
+   "identities": [
+    "crates.io:github:unicode-org:icu4x-release",
+    "crates.io:sffc"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zerotrie/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zerovec",
+   "version": "0.11.8",
+   "category": "runtime",
+   "identities": [
+    "crates.io:Manishearth",
+    "crates.io:github:unicode-org:icu4x-release"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zerovec/owners"
+  },
+  {
+   "ecosystem": "crates.io",
+   "name": "zmij",
+   "version": "1.0.23",
+   "category": "runtime",
+   "identities": [
+    "crates.io:dtolnay"
+   ],
+   "evidence": "https://crates.io/api/v1/crates/zmij/owners"
+  }
+ ],
+ "sources": [
+  {
+   "label": "crates.io crates (runtime, vendored)",
+   "bytes": 60323485,
+   "lines": 1329298
+  },
+  {
+   "label": "crates.io crates (build, vendored)",
+   "bytes": 13737588,
+   "lines": 336484
+  }
+ ]
+}
