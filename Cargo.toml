@@ -22,3 +22,13 @@ tokio = { version = "1.53.1", features = ["rt-multi-thread", "macros", "net", "s
 [dev-dependencies]
 # Already in the tree through axum; ServiceExt::oneshot drives the router in tests.
 tower = { version = "0.5.3", default-features = false, features = ["util"] }
+
+# Optimise debug builds: unoptimised, one 600,000-iteration PBKDF2 takes
+# about 9 s, and every login pays it. Dependencies get full optimisation;
+# our own crate, where the generic PBKDF2 and HMAC code is instantiated,
+# gets enough to inline it.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3

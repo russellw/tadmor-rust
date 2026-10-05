@@ -10,10 +10,11 @@ PG ?= postgres://tadmor:tadmor@127.0.0.1:5432
 DATABASE_URL ?= $(PG)/tadmor_rust?sslmode=disable
 TEST_DATABASE_URL ?= $(PG)/tadmor_rust_test?sslmode=disable
 PREPARE_DATABASE_URL ?= $(PG)/tadmor_rust_prepare?sslmode=disable
+CONFORMANCE_DATABASE_URL ?= $(PG)/tadmor_rust_conformance?sslmode=disable
 HTTP_ADDR ?= 127.0.0.1:8080
 
 .DEFAULT_GOAL := help
-.PHONY: help build release run test check sqlx-prepare vendor-check vendor-sync db clean
+.PHONY: help build release run adduser test conformance check sqlx-prepare vendor-check vendor-sync db clean
 
 help: ## List available targets
 	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | \
@@ -28,8 +29,14 @@ release: ## Build the server (release) into target/release/tadmor
 run: build ## Build and run the server (migrates on start)
 	DATABASE_URL='$(DATABASE_URL)' HTTP_ADDR=$(HTTP_ADDR) target/debug/tadmor
 
+adduser: build ## Create or reset an administrator: make adduser EMAIL=... NAME=... (password on stdin)
+	DATABASE_URL='$(DATABASE_URL)' target/debug/tadmor adduser --email='$(EMAIL)' --name='$(NAME)'
+
 test: ## Run the tests (integration tests wipe TEST_DATABASE_URL)
 	TEST_DATABASE_URL='$(TEST_DATABASE_URL)' cargo test --locked
+
+conformance: release ## Run tadmor's conformance suite against a fresh server (wipes the _conformance DB)
+	DATABASE_URL='$(CONFORMANCE_DATABASE_URL)' tools/conformance.sh $(ARGS)
 
 check: vendor-check ## Verify vendor/ and that .sqlx/ covers every query (offline)
 	cargo check --locked --all-targets
@@ -43,8 +50,8 @@ vendor-check: ## Verify vendor/, Cargo.lock, and dependencies.json (offline)
 vendor-sync: ## Re-resolve from crates.io, apply the cooldown, re-vendor (network)
 	tools/vendor.py sync
 
-db: ## Create the dev, test, and prepare databases on the Postgres at PG
-	for db in tadmor_rust tadmor_rust_test tadmor_rust_prepare; do \
+db: ## Create the dev, test, prepare, and conformance databases on the Postgres at PG
+	for db in tadmor_rust tadmor_rust_test tadmor_rust_prepare tadmor_rust_conformance; do \
 		psql '$(PG)/postgres?sslmode=disable' -qXc "CREATE DATABASE $$db" || true; \
 	done
 

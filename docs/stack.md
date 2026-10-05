@@ -155,6 +155,9 @@ else without a conversation first. In particular:
 - **No SQLx default features.** In particular no `tls-*`: the database is
   local, and the only TLS is lettre's, to the mail relay.
 - **No `sqlx-cli`** (above).
+- **No `rand`, `getrandom`, `base64`, or `hex` as direct dependencies.**
+  Salts and session tokens are read from `/dev/urandom`, and stored and
+  sent in hex, with a few lines of our own code.
 - **No test frameworks or HTTP test clients.** `cargo test` drives the
   router in-process through tower's `ServiceExt::oneshot`, from a crate
   already in the tree.

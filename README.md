@@ -6,21 +6,24 @@ checked by its `conformance/` suite, built on Axum, SQLx and server-rendered
 Askama templates so the stacks can be compared. See
 [`docs/stack.md`](docs/stack.md) for why this stack, and what it costs.
 
-Status: scaffold. The server connects to Postgres, applies the shared
-schema, and answers the probes (`GET /healthz`, `GET /readyz`). The JSON
-API and the UI are still to come.
+Status: in progress. The server applies the shared schema, answers the
+probes, and implements sessions (`/api/auth/*`) and user administration
+(`/api/users`). The rest of the JSON API and the UI are still to come.
 
 ## Layout
 
 ```
-src/               the server: config, db (pool and migrations), http (routes)
+src/               the server: services (auth, users) holding the business
+                   rules, http/ (routes, extractors, session middleware),
+                   error (the API's error type), db, config
 tests/             integration tests, driving the router in-process
 db/migrations/     tadmor's shared schema (a copy; see spec/UPSTREAM)
 spec/              tadmor's stack-neutral specification (a copy)
 conformance/       tadmor's black-box conformance suite (a copy)
 .sqlx/             query metadata that sqlx::query! checks against at build time
 vendor/            every third-party crate, committed (tools/vendor.py)
-tools/             vendor.py (vendoring and dependencies.json), sqlx-prepare.sh
+tools/             vendor.py (vendoring and dependencies.json), sqlx-prepare.sh,
+                   conformance.sh
 docs/              the stack decision
 ```
 
@@ -31,7 +34,8 @@ docs/              the stack decision
 - **Postgres 17** reachable at `PG` (default
   `postgres://tadmor:tadmor@127.0.0.1:5432`), with a role that can create
   the `citext` extension. `make db` creates the databases.
-- `psql`, for `make sqlx-prepare` and `make db`.
+- `psql`, for `make sqlx-prepare`, `make conformance` and `make db`.
+- Go, for `make conformance` only (the suite is a stdlib-only Go program).
 
 ## Configuration
 
@@ -52,7 +56,15 @@ make db             # create tadmor_rust, tadmor_rust_test, tadmor_rust_prepare
 make run            # build and run on 127.0.0.1:8080 (migrates on start)
 make test           # unit and integration tests
 make check          # vendor/ and .sqlx/ are complete and consistent
+make conformance    # tadmor's suite against a fresh release server
+make conformance ARGS="-v -run '^(auth|users)/'"
+echo 'the-password' | make adduser EMAIL=you@example.com NAME='Your Name'
 ```
+
+The first administrator is created out of band with `tadmor adduser`
+(`--admin=false` makes an ordinary login), which reads the password from
+the first line of stdin and migrates the database first. The conformance
+suite needs Go (`go run`), as it does for every implementation.
 
 > The integration tests and `make sqlx-prepare` **drop and recreate the
 > `public` schema** of their databases. Point them only at throwaway ones.

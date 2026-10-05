@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO users (email, full_name, password_hash, is_admin) VALUES ($1::text::citext, $2, $3, $4)\n         ON CONFLICT (email) DO UPDATE\n         SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash,\n             is_active = true, is_admin = EXCLUDED.is_admin\n         RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "c223014a6f8dab300a4cefdefdcc04dabf25184d1935f4e38fc6c740b825095b"
+}
