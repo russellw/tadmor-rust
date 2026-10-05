@@ -63,10 +63,19 @@ individual accounts or GitHub teams (`github:tokio-rs:core`). A team hides
 its members, as a PyPI organization does, so a team counts once, and the
 figures are low in that respect.
 
-These are preliminary hand measurements, not taken from a committed
-manifest yet. Build-time crates (build scripts' dependencies and proc
-macros) are not separated from runtime ones. Once `tools/vendor.py`
-writes `dependencies.json`, `tools/measure.py` will give the split.
+The comparison below was measured by hand while choosing, counting crates
+by name. The committed manifest counts each version separately (`syn` 2
+and 3, for example), as tadmor's metrics doc defines it. Through
+`tools/measure.py` it gives, for the chosen stack as locked:
+
+| | runtime | build | runtime+build |
+| --- | ---: | ---: | ---: |
+| Crates | 149 | 34 | **183** |
+| Identities | 113 | 33 | **126** |
+
+Build here means build scripts' dependencies, proc macros, and everything
+only they use. The vendored source is 60.3 MB (1.33 M lines) for runtime
+and 13.7 MB (0.34 M lines) for build.
 
 | Option | Crates | Identities |
 | ------ | -----: | ---------: |
@@ -152,10 +161,17 @@ else without a conversation first. In particular:
 
 - **Vendored and committed.** `cargo vendor` puts every crate's source into
   `vendor/`, unmodified, and `.cargo/config.toml` replaces crates.io with
-  it. A clean clone builds with `--offline --locked` and the OS toolchain
-  alone, which is level 3 of tadmor's ladder. Level 4 (byte-identical
-  rebuilds, with `--remap-path-prefix`) is the target, to be confirmed by
-  measurement.
+  it, with the network off. A clean clone builds with the OS toolchain
+  alone. **Level 4 of tadmor's ladder, measured on 2026-10-05:** a fresh
+  clone, built in an `ubuntu:26.04` container with `--network=none`, the
+  host's `/usr` and `/etc/alternatives` mounted read-only, and an empty
+  `CARGO_HOME`, built `--release --locked` twice into separate target
+  directories, producing byte-identical 1.7 MB binaries.
+- **Other platforms' crates are stubs.** `Cargo.lock` covers every
+  platform, and Cargo reads every locked crate's manifest even when it
+  will not build it. The 51 crates that only other platforms use
+  (`windows-sys` and the like) are vendored as their `Cargo.toml` and an
+  empty library file, so their code is neither committed nor trusted.
 - **Pinned.** `Cargo.lock` records each crate's exact version and sha256,
   and Cargo checks every vendored file against the checksums `cargo vendor`
   recorded beside it.
@@ -163,15 +179,20 @@ else without a conversation first. In particular:
   On 2026-10-05 the resolver chose five that were (`tokio` 1.53.2, `mio`
   1.2.4, `cc` 1.6.0, `libc` 0.2.190, `yoke-derive` 0.8.4), so these are held
   back with `cargo update --precise` until they age.
-- **Dependency manifest.** A vendoring script of our own, `tools/vendor.py`
-  (standard library only), writes `dependencies.json` from `cargo
-  metadata` and the crates.io owners API, in the format of tadmor's
-  `docs/counterpart-metrics.md`, and enforces the cooldown.
+- **Install-time code execution:** required (build scripts and proc
+  macros, above). There is no switch to block it.
+- **Tooling.** `tools/vendor.py` (standard library only) is the whole
+  toolchain beyond Cargo. `sync` resolves online in a scratch copy, applies
+  the cooldown, vendors, and writes `dependencies.json` from `cargo tree`
+  and the crates.io owners API, in the format of tadmor's
+  `docs/counterpart-metrics.md`. `check` verifies `vendor/` offline against
+  `Cargo.lock` and the manifest, and fails if an ignore rule would hide a
+  vendored file from git.
 
 | Crate | Version | Published | Role |
 | ----- | ------- | --------- | ---- |
 | axum | 0.8.9 | 2026-04-14 | HTTP routing, extractors, form and JSON bodies |
-| tokio | 1.x | | async runtime |
+| tokio | 1.53.1 | 2026-07-20 | async runtime |
 | sqlx | 0.8.6 | 2025-05-19 | Postgres driver, pool, migrations, checked queries |
 | askama | 0.16.1 | 2026-09-04 | compile-time HTML templates |
 | serde, serde_json | 1.x | | JSON |
