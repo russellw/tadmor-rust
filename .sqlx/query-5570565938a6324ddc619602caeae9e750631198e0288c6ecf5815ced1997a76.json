@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO accounting_periods (fiscal_year_id, name, start_date, end_date)\n             SELECT fy.id, to_char($1::text::date, 'YYYY-MM'),\n                    GREATEST(date_trunc('month', $1::text::date)::date, fy.start_date),\n                    LEAST((date_trunc('month', $1::text::date) + interval '1 month - 1 day')::date, fy.end_date)\n             FROM fiscal_years fy\n             WHERE $1::text::date BETWEEN fy.start_date AND fy.end_date AND fy.status = 'open'\n             ORDER BY fy.start_date LIMIT 1\n             ON CONFLICT DO NOTHING",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5570565938a6324ddc619602caeae9e750631198e0288c6ecf5815ced1997a76"
+}

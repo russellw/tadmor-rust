@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO journal_entries (entry_date, period_id, currency_code, exchange_rate, memo, reference, status, posted_at)\n         SELECT $1::text::date, $2, $3, r.rate, $4, $5, 'posted', now()\n         FROM (SELECT CASE WHEN $3 = (SELECT base_currency FROM gl_settings) THEN 1::numeric\n                           ELSE (SELECT rate FROM exchange_rates\n                                 WHERE currency_code = $3 AND rate_date <= $1::text::date\n                                 ORDER BY rate_date DESC LIMIT 1)\n                      END AS rate) r\n         WHERE r.rate IS NOT NULL\n         RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Int4",
+        "Bpchar",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "8eff86894a8e4bade2fd48fdb554c267ff69953312e1edff32f64652fafb699c"
+}

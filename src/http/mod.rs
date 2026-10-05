@@ -1,6 +1,7 @@
 //! The HTTP surface: the probes at the root and the JSON API under /api/
 //! (spec/api.md). The UI is to come.
 
+mod documents;
 mod extract;
 mod master;
 mod session;
@@ -64,7 +65,10 @@ pub fn router(state: AppState) -> Router {
             "/exchange-rates/{currency}/{date}",
             put(master::update_exchange_rate).delete(master::delete_exchange_rate),
         )
+        .route("/journal-entries/{id}", get(documents::journal_entry))
+        .route("/trial-balance", get(documents::trial_balance))
         .merge(admin)
+        .merge(crate::documents::KINDS.iter().fold(Router::new(), |r, kind| r.merge(documents::routes(kind))))
         .fallback(no_such_endpoint)
         .method_not_allowed_fallback(no_such_endpoint)
         .layer(from_fn_with_state(state.clone(), session::require_session));

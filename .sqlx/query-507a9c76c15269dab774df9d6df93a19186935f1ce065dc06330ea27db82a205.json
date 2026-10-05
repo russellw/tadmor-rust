@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO journal_entries (entry_date, period_id, currency_code, exchange_rate, memo, reverses_entry_id,\n             status, posted_at, is_closing)\n         SELECT entry_date, $2, currency_code, exchange_rate, 'Reversal of journal entry ' || id, id, 'posted', now(), is_closing\n         FROM journal_entries WHERE id = $1\n         RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "507a9c76c15269dab774df9d6df93a19186935f1ce065dc06330ea27db82a205"
+}

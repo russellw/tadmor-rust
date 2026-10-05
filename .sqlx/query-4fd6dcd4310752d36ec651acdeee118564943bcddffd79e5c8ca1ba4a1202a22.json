@@ -1,0 +1,56 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT account_id AS \"account_id!\", code AS \"code!\", name AS \"name!\", account_type AS \"account_type!\",\n               total_debit::numeric(19,4)::text AS \"total_debit!\", total_credit::numeric(19,4)::text AS \"total_credit!\",\n               balance::numeric(19,4)::text AS \"balance!\"\n           FROM trial_balance ORDER BY code",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "account_id!",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "code!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "account_type!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "total_debit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "total_credit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "balance!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      true,
+      true,
+      true,
+      true,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "4fd6dcd4310752d36ec651acdeee118564943bcddffd79e5c8ca1ba4a1202a22"
+}

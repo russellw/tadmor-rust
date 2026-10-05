@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT EXISTS (SELECT 1 FROM accounting_periods WHERE $1::text::date BETWEEN start_date AND end_date) AS \"covered!\"",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "covered!",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "7781757430e653c291640dc259c7e022fef1cf8704472d4c6b84f7933df37696"
+}

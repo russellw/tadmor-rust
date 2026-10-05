@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id FROM accounting_periods\n         WHERE $1::text::date BETWEEN start_date AND end_date AND status = 'open'\n         ORDER BY id LIMIT 1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "a35cba2b693d57b51a9a81c02b0d0823aeaeb09e20a96259850891d7bdaf104c"
+}

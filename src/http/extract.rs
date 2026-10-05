@@ -25,8 +25,8 @@ impl<T: DeserializeOwned, S: Send + Sync> FromRequest<S> for Body<T> {
     }
 }
 
-/// A path id: a positive integer, or a 400. One too large for any row is
-/// still well formed, and simply finds nothing (404).
+/// A path id: a positive integer that fits in 64 bits, or a 400. One too
+/// large for any row is still well formed, and simply finds nothing (404).
 pub struct Id(pub i64);
 
 impl<S: Send + Sync> FromRequestParts<S> for Id {
@@ -36,13 +36,9 @@ impl<S: Send + Sync> FromRequestParts<S> for Id {
         let Path(raw) = Path::<String>::from_request_parts(parts, state)
             .await
             .map_err(|_| Error::bad_request("invalid id"))?;
-        if raw.is_empty() || !raw.bytes().all(|b| b.is_ascii_digit()) {
-            return Err(Error::bad_request("invalid id"));
-        }
-        match raw.parse::<u64>() {
-            Ok(0) => Err(Error::bad_request("invalid id")),
-            Ok(n) => Ok(Id(i64::try_from(n).unwrap_or(i64::MAX))),
-            Err(_) => Ok(Id(i64::MAX)), // digits beyond u64: positive, and matches nothing
+        match raw.parse::<i64>() {
+            Ok(id) if id > 0 => Ok(Id(id)),
+            _ => Err(Error::bad_request("invalid id")),
         }
     }
 }

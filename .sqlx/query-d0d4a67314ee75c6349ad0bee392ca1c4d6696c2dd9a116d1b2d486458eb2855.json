@@ -1,0 +1,70 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT jl.line_no, jl.account_id, a.code AS account_code, a.name AS account_name, jl.memo,\n               jl.debit::text AS \"debit!\", jl.credit::text AS \"credit!\",\n               jl.base_debit::text AS \"base_debit!\", jl.base_credit::text AS \"base_credit!\"\n           FROM journal_lines jl JOIN accounts a ON a.id = jl.account_id\n           WHERE jl.journal_entry_id = $1 ORDER BY jl.line_no",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "line_no",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "account_code",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "account_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "memo",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "debit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "credit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "base_debit!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "base_credit!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "d0d4a67314ee75c6349ad0bee392ca1c4d6696c2dd9a116d1b2d486458eb2855"
+}

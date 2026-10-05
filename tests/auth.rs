@@ -96,7 +96,9 @@ async fn user_administration() {
     assert_eq!(u.body, json!({"id": id, "email": email, "full_name": "Ann Example", "is_active": true, "is_admin": false}));
     for (path, status) in [
         ("/api/users/999999", StatusCode::NOT_FOUND),
-        ("/api/users/99999999999999999999999", StatusCode::NOT_FOUND),
+        ("/api/users/99999999999", StatusCode::NOT_FOUND),
+        ("/api/users/99999999999999999999999", StatusCode::BAD_REQUEST),
+        ("/api/users/1.5", StatusCode::BAD_REQUEST),
         ("/api/users/0", StatusCode::BAD_REQUEST),
         ("/api/users/-1", StatusCode::BAD_REQUEST),
         ("/api/users/abc", StatusCode::BAD_REQUEST),
