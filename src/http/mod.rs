@@ -4,6 +4,7 @@
 mod documents;
 mod extract;
 mod master;
+mod payments;
 mod session;
 mod users;
 
@@ -69,6 +70,13 @@ pub fn router(state: AppState) -> Router {
         .route("/trial-balance", get(documents::trial_balance))
         .merge(admin)
         .merge(crate::documents::KINDS.iter().fold(Router::new(), |r, kind| r.merge(documents::routes(kind))))
+        .merge(crate::payments::PAYMENT_KINDS.iter().fold(Router::new(), |r, kind| r.merge(payments::routes(kind))))
+        .merge(
+            ["customer-payments", "supplier-payments", "sales-credit-notes", "purchase-credit-notes"]
+                .into_iter()
+                .filter_map(crate::settlement::settler)
+                .fold(Router::new(), |r, s| r.merge(payments::settlement_routes(s))),
+        )
         .fallback(no_such_endpoint)
         .method_not_allowed_fallback(no_such_endpoint)
         .layer(from_fn_with_state(state.clone(), session::require_session));

@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO journal_lines (journal_entry_id, line_no, account_id, debit, credit, base_debit, base_credit)\n         SELECT id, 2, $2, 0, $3::text::numeric, 0, round($3::text::numeric * exchange_rate, 4)\n         FROM journal_entries WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Int4",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0ed067dfab3679a1bf3619fdbbcd2766b061c20e1efee40dafd80358d835de82"
+}

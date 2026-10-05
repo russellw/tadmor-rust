@@ -126,11 +126,11 @@ async fn posting_refusals_in_order() {
     let mut c = common::admin().await;
     let y = common::open_year(&mut c).await;
     let (cust, l) = common::party(&mut c, "customers").await;
-    let mut invoice = |customer: i64, date: String, lines: Value| {
+    let invoice = |customer: i64, date: String, lines: Value| {
         json!({"invoice_number": code("INV"), "customer_id": customer, "invoice_date": date, "currency_code": "USD", "lines": lines})
     };
     let five = json!([{"description": "x", "unit_price": "5", "revenue_account_id": l.detail}]);
-    let mut try_post = async |c: &mut Client, body: Value| {
+    let try_post = async |c: &mut Client, body: Value| {
         let id = create(c, "/api/sales-invoices", body).await;
         status(c, "POST", &format!("/api/sales-invoices/{id}/post"), None).await
     };

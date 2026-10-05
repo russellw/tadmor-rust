@@ -190,16 +190,16 @@ pub struct LineInput {
     pub tax_rate: Option<String>,
 }
 
-fn wrong_type(field: &str) -> Error {
+pub(crate) fn wrong_type(field: &str) -> Error {
     Error::bad_request(format!("invalid JSON body: {field} has the wrong type"))
 }
 
 /// A string field; absent or null reads as empty.
-fn string(m: &Map<String, Value>, key: &str) -> Result<String> {
+pub(crate) fn string(m: &Map<String, Value>, key: &str) -> Result<String> {
     Ok(optional_string(m, key)?.unwrap_or_default())
 }
 
-fn optional_string(m: &Map<String, Value>, key: &str) -> Result<Option<String>> {
+pub(crate) fn optional_string(m: &Map<String, Value>, key: &str) -> Result<Option<String>> {
     match m.get(key) {
         None | Some(Value::Null) => Ok(None),
         Some(Value::String(s)) => Ok(Some(s.clone())),
@@ -207,7 +207,7 @@ fn optional_string(m: &Map<String, Value>, key: &str) -> Result<Option<String>> 
     }
 }
 
-fn optional_int(m: &Map<String, Value>, key: &str) -> Result<Option<i64>> {
+pub(crate) fn optional_int(m: &Map<String, Value>, key: &str) -> Result<Option<i64>> {
     match m.get(key) {
         None | Some(Value::Null) => Ok(None),
         Some(v) => v.as_i64().map(Some).ok_or_else(|| wrong_type(key)),
@@ -277,7 +277,7 @@ fn or(value: &Option<String>, default: &str) -> String {
     value.clone().filter(|v| !v.is_empty()).unwrap_or_else(|| default.to_string())
 }
 
-fn conflict(message: impl Into<String>) -> Error {
+pub(crate) fn conflict(message: impl Into<String>) -> Error {
     Error::new(axum::http::StatusCode::CONFLICT, message)
 }
 
@@ -426,7 +426,7 @@ fn read_sql(kind: &Kind) -> String {
     )
 }
 
-fn parse(json: String) -> Result<Value> {
+pub(crate) fn parse(json: String) -> Result<Value> {
     serde_json::from_str(&json).map_err(Error::internal)
 }
 

@@ -10,16 +10,18 @@ Status: in progress. The server applies the shared schema, answers the
 probes, and implements sessions and users (spec/api.md §3, §5.1), master
 data (§5.2 to §5.6), the fiscal calendar apart from year-end close
 (§5.7), settings and exchange rates (§5.8), invoices, bills and credit
-notes with posting and unposting (§5.9), journal entries, the account
-ledger, and the trial balance. Payments and settlement, year-end, orders,
-inventory, banking, the other reports, PDFs and email, and the UI are
-still to come. 18 of the 35 conformance cases pass.
+notes and payments with posting, unposting and settlement, including
+realized exchange differences (§5.9), journal entries, the account
+ledger, and the trial balance. Year-end, orders, inventory, banking, the
+other reports, PDFs and email, and the UI are still to come. 22 of the
+35 conformance cases pass.
 
 ## Layout
 
 ```
 src/               the server: services (auth, users, master, calendar,
-                   currency, documents, posting, reporting) holding the business
+                   currency, documents, payments, posting, settlement, reporting)
+                   holding the business
                    rules, http/ (routes, extractors, session middleware),
                    error (the API's error type), db, config
 tests/             integration tests, driving the router in-process

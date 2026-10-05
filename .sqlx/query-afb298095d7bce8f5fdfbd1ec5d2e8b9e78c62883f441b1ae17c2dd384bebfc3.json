@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO journal_lines (journal_entry_id, line_no, account_id, debit, credit, memo, base_debit, base_credit)\n                 SELECT $1, $2, $3, greatest(v, 0), greatest(-v, 0), $4, greatest(v, 0), greatest(-v, 0)\n                 FROM (SELECT $5::text::numeric * $6::int4 AS v) d",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Int4",
+        "Int4",
+        "Text",
+        "Text",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "afb298095d7bce8f5fdfbd1ec5d2e8b9e78c62883f441b1ae17c2dd384bebfc3"
+}
