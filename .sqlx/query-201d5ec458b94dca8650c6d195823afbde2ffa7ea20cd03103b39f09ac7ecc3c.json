@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO journal_lines (journal_entry_id, line_no, account_id, debit, credit, base_debit, base_credit)\n             VALUES ($1, $2, $3, CASE WHEN $4 THEN $5::text::numeric ELSE 0 END, CASE WHEN $4 THEN 0 ELSE $5::text::numeric END,\n                     CASE WHEN $4 THEN $5::text::numeric ELSE 0 END, CASE WHEN $4 THEN 0 ELSE $5::text::numeric END)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Int4",
+        "Int4",
+        "Bool",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "201d5ec458b94dca8650c6d195823afbde2ffa7ea20cd03103b39f09ac7ecc3c"
+}

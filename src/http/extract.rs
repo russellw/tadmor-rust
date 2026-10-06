@@ -25,6 +25,22 @@ impl<T: DeserializeOwned, S: Send + Sync> FromRequest<S> for Body<T> {
     }
 }
 
+/// A JSON request body that may be absent: an empty body reads as the
+/// default, and anything else must decode, as for `Body`.
+pub struct OptionalBody<T>(pub T);
+
+impl<T: DeserializeOwned + Default, S: Send + Sync> FromRequest<S> for OptionalBody<T> {
+    type Rejection = Error;
+
+    async fn from_request(req: Request, state: &S) -> Result<Self, Error> {
+        let bytes = Bytes::from_request(req, state).await.map_err(|e| Error::bad_request(e.body_text()))?;
+        if bytes.iter().all(u8::is_ascii_whitespace) {
+            return Ok(OptionalBody(T::default()));
+        }
+        serde_json::from_slice(&bytes).map(OptionalBody).map_err(|e| Error::bad_request(format!("invalid JSON body: {e}")))
+    }
+}
+
 /// A path id: a positive integer that fits in 64 bits, or a 400. One too
 /// large for any row is still well formed, and simply finds nothing (404).
 pub struct Id(pub i64);

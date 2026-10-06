@@ -1,0 +1,58 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT sm.movement_type, sm.movement_date::text AS \"date!\", sm.journal_entry_id, sm.total_cost <> 0 AS \"has_cost!\",\n               abs(sm.total_cost)::text AS \"cost!\", p.inventory_account_id, p.cogs_account_id\n           FROM stock_movements sm JOIN products p ON p.id = sm.product_id\n           WHERE sm.id = $1::int8",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "movement_type",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "journal_entry_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 3,
+        "name": "has_cost!",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 4,
+        "name": "cost!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "inventory_account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 6,
+        "name": "cogs_account_id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      null,
+      true,
+      null,
+      null,
+      true,
+      true
+    ]
+  },
+  "hash": "1bf33eef456030bdab49fd375d578e22101bf5feb81fb5d81d08ddf29247a094"
+}

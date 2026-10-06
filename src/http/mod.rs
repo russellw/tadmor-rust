@@ -3,6 +3,7 @@
 
 mod documents;
 mod extract;
+mod inventory;
 mod master;
 mod payments;
 mod reports;
@@ -31,6 +32,7 @@ pub fn router(state: AppState) -> Router {
         .route("/users/{id}/password", post(users::set_password))
         .route("/fiscal-years/{id}/close", post(reports::close_year))
         .route("/fiscal-years/{id}/reopen", post(reports::reopen_year))
+        .route("/stock-movements/{id}/unpost", post(inventory::unpost))
         .route_layer(from_fn(session::require_admin));
 
     // Authentication wraps the whole API, unknown paths included, so they
@@ -69,6 +71,9 @@ pub fn router(state: AppState) -> Router {
             "/exchange-rates/{currency}/{date}",
             put(master::update_exchange_rate).delete(master::delete_exchange_rate),
         )
+        .route("/stock-movements", get(inventory::list).post(inventory::create))
+        .route("/stock-movements/{id}", get(inventory::get).put(inventory::update).delete(inventory::delete))
+        .route("/stock-movements/{id}/post", post(inventory::post))
         .route("/journal-entries/{id}", get(documents::journal_entry))
         .route("/trial-balance", get(documents::trial_balance))
         .route("/profit-and-loss", get(reports::profit_and_loss))

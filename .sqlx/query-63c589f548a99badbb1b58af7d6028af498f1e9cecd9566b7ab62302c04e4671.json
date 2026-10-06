@@ -1,0 +1,92 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, product_id, warehouse_id, movement_date::text AS \"movement_date!\", movement_type,\n               CASE WHEN journal_entry_id IS NULL THEN 'draft' ELSE 'posted' END AS \"status!\",\n               quantity::text AS \"quantity!\", unit_cost::text AS \"unit_cost!\", total_cost::text AS \"total_cost!\",\n               reference, notes, journal_entry_id, source_type\n           FROM stock_movements ORDER BY movement_date DESC, id DESC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "product_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "warehouse_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 3,
+        "name": "movement_date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "movement_type",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "status!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "quantity!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "unit_cost!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "total_cost!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "reference",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "notes",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 11,
+        "name": "journal_entry_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 12,
+        "name": "source_type",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      null,
+      false,
+      null,
+      null,
+      null,
+      null,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "63c589f548a99badbb1b58af7d6028af498f1e9cecd9566b7ab62302c04e4671"
+}

@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE stock_movements SET journal_entry_id = NULL, period_id = NULL WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0f7c46c99996367d1e146ee4c28a07c21588bed5976176312193efe3dba0013d"
+}

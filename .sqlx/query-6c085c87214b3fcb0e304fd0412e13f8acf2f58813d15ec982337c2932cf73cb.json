@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM stock_movements WHERE id = $1::int8 AND journal_entry_id IS NULL",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "6c085c87214b3fcb0e304fd0412e13f8acf2f58813d15ec982337c2932cf73cb"
+}

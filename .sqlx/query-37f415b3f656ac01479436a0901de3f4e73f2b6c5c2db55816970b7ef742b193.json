@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT journal_entry_id FROM stock_movements WHERE id = $1::int8",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "journal_entry_id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "37f415b3f656ac01479436a0901de3f4e73f2b6c5c2db55816970b7ef742b193"
+}

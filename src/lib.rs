@@ -3,9 +3,10 @@
 //! (docs/stack.md).
 //!
 //! Business rules live in the service modules (auth, users, master,
-//! calendar, currency, documents, payments, posting, settlement, reporting,
-//! yearend, and those to come), shared by the JSON API and the UI in http.
-//! Services return `error::Error`, which carries the spec's HTTP status.
+//! calendar, currency, documents, inventory, payments, posting, settlement,
+//! reporting, yearend, and those to come), shared by the JSON API and the
+//! UI in http. Services return `error::Error`, which carries the spec's
+//! HTTP status.
 
 pub mod auth;
 pub mod calendar;
@@ -15,6 +16,7 @@ pub mod db;
 pub mod documents;
 pub mod error;
 pub mod http;
+pub mod inventory;
 pub mod master;
 pub mod payments;
 pub mod posting;
