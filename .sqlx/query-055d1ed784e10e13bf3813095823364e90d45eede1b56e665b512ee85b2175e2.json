@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT name, end_date::text AS \"end_date!\", status,\n               EXISTS (SELECT 1 FROM fiscal_years e WHERE e.id <> y.id AND e.status = 'open' AND e.start_date < y.start_date)\n                   AS \"earlier_open!\"\n           FROM fiscal_years y WHERE id = $1::int8",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "end_date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "status",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "earlier_open!",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      null,
+      false,
+      null
+    ]
+  },
+  "hash": "055d1ed784e10e13bf3813095823364e90d45eede1b56e665b512ee85b2175e2"
+}

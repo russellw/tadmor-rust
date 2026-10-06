@@ -1,0 +1,62 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT a.customer_id AS \"party_id!\", o.name AS party_name,\n               COALESCE(a.total_outstanding, 0)::numeric(19,4)::text AS \"total_outstanding!\",\n               COALESCE(a.not_yet_due, 0)::numeric(19,4)::text AS \"not_yet_due!\",\n               COALESCE(a.days_1_30, 0)::numeric(19,4)::text AS \"days_1_30!\",\n               COALESCE(a.days_31_60, 0)::numeric(19,4)::text AS \"days_31_60!\",\n               COALESCE(a.days_61_90, 0)::numeric(19,4)::text AS \"days_61_90!\",\n               COALESCE(a.days_over_90, 0)::numeric(19,4)::text AS \"days_over_90!\"\n           FROM ar_aging a\n           JOIN customers c ON c.id = a.customer_id\n           JOIN organizations o ON o.id = c.organization_id\n           ORDER BY a.customer_id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "party_id!",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "party_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "total_outstanding!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "not_yet_due!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "days_1_30!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "days_31_60!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "days_61_90!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "days_over_90!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      true,
+      false,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "2337f654fa0646f9f8d7c6bc0ff38a96d10d6e068cd4df0c9a2bb4e8d5c8be68"
+}

@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT count(*) AS \"n!\" FROM (\n               SELECT jl.account_id FROM journal_lines jl\n               JOIN journal_entries je ON je.id = jl.journal_entry_id\n               JOIN accounts a ON a.id = jl.account_id\n               WHERE je.status = 'posted' AND a.account_type IN ('revenue', 'expense') AND je.entry_date <= $1::text::date\n               GROUP BY jl.account_id HAVING sum(jl.base_debit - jl.base_credit) <> 0) b",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "n!",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "fcf1007757f1b2e01a3950f46b123877585dd3ffafbe926329b443c2a9c9e3ba"
+}

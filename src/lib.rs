@@ -4,8 +4,8 @@
 //!
 //! Business rules live in the service modules (auth, users, master,
 //! calendar, currency, documents, payments, posting, settlement, reporting,
-//! and those to come), shared by the JSON API and the UI in http. Services
-//! return `error::Error`, which carries the spec's HTTP status.
+//! yearend, and those to come), shared by the JSON API and the UI in http.
+//! Services return `error::Error`, which carries the spec's HTTP status.
 
 pub mod auth;
 pub mod calendar;
@@ -21,3 +21,4 @@ pub mod posting;
 pub mod reporting;
 pub mod settlement;
 pub mod users;
+pub mod yearend;

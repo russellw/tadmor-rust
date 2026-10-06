@@ -1,0 +1,47 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT a.id AS account_id, a.code, a.name, a.account_type,\n               sum(CASE WHEN a.account_type = 'revenue' THEN jl.base_credit - jl.base_debit\n                        ELSE jl.base_debit - jl.base_credit END)::numeric(19,4)::text AS \"amount!\"\n           FROM journal_lines jl\n           JOIN journal_entries je ON je.id = jl.journal_entry_id\n           JOIN accounts a ON a.id = jl.account_id\n           WHERE je.status = 'posted' AND NOT je.is_closing AND a.account_type IN ('revenue', 'expense')\n             AND ($1::text IS NULL OR je.entry_date >= $1::text::date)\n             AND ($2::text IS NULL OR je.entry_date <= $2::text::date)\n           GROUP BY a.id ORDER BY a.code",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "code",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "account_type",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "amount!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      null
+    ]
+  },
+  "hash": "ba3d6fea88ab68e702bde36d31864ec30e602c89d252316b1af4c1e06cad2989"
+}

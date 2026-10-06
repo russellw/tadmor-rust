@@ -5,6 +5,7 @@ mod documents;
 mod extract;
 mod master;
 mod payments;
+mod reports;
 mod session;
 mod users;
 
@@ -28,6 +29,8 @@ pub fn router(state: AppState) -> Router {
         .route("/users", get(users::list).post(users::create))
         .route("/users/{id}", get(users::get).put(users::update))
         .route("/users/{id}/password", post(users::set_password))
+        .route("/fiscal-years/{id}/close", post(reports::close_year))
+        .route("/fiscal-years/{id}/reopen", post(reports::reopen_year))
         .route_layer(from_fn(session::require_admin));
 
     // Authentication wraps the whole API, unknown paths included, so they
@@ -68,6 +71,12 @@ pub fn router(state: AppState) -> Router {
         )
         .route("/journal-entries/{id}", get(documents::journal_entry))
         .route("/trial-balance", get(documents::trial_balance))
+        .route("/profit-and-loss", get(reports::profit_and_loss))
+        .route("/balance-sheet", get(reports::balance_sheet))
+        .route("/cash-flow", get(reports::cash_flow))
+        .route("/ar-aging", get(reports::ar_aging))
+        .route("/ap-aging", get(reports::ap_aging))
+        .route("/inventory-valuation", get(reports::inventory_valuation))
         .merge(admin)
         .merge(crate::documents::KINDS.iter().fold(Router::new(), |r, kind| r.merge(documents::routes(kind))))
         .merge(crate::payments::PAYMENT_KINDS.iter().fold(Router::new(), |r, kind| r.merge(payments::routes(kind))))

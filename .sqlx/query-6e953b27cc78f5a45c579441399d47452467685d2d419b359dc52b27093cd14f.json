@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "WITH balance AS (\n                 SELECT jl.account_id, sum(jl.base_debit - jl.base_credit) AS amount\n                 FROM journal_lines jl\n                 JOIN journal_entries je ON je.id = jl.journal_entry_id\n                 JOIN accounts a ON a.id = jl.account_id\n                 WHERE je.status = 'posted' AND a.account_type IN ('revenue', 'expense') AND je.entry_date <= $1::text::date\n                 GROUP BY jl.account_id HAVING sum(jl.base_debit - jl.base_credit) <> 0\n             ), lines AS (\n                 SELECT 0 AS ord, account_id, greatest(-amount, 0) AS debit, greatest(amount, 0) AS credit,\n                        'Year-end close' AS memo\n                 FROM balance\n                 UNION ALL\n                 SELECT 1, $3::int8::int4, greatest(total, 0), greatest(-total, 0), 'Net income (loss) for ' || $4\n                 FROM (SELECT sum(amount) AS total FROM balance) t WHERE total <> 0\n             )\n             INSERT INTO journal_lines (journal_entry_id, line_no, account_id, debit, credit, memo, base_debit, base_credit)\n             SELECT $2, row_number() OVER (ORDER BY ord, account_id), account_id, debit, credit, memo, debit, credit\n             FROM lines",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Int4",
+        "Int8",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "6e953b27cc78f5a45c579441399d47452467685d2d419b359dc52b27093cd14f"
+}

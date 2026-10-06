@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT COALESCE(sum(jl.base_credit - jl.base_debit), 0)::numeric(19,4)::text AS \"net!\"\n           FROM journal_lines jl\n           JOIN journal_entries je ON je.id = jl.journal_entry_id\n           JOIN accounts a ON a.id = jl.account_id\n           WHERE je.status = 'posted' AND NOT je.is_closing AND a.account_type IN ('revenue', 'expense')\n             AND ($1::text IS NULL OR je.entry_date >= $1::text::date)\n             AND ($2::text IS NULL OR je.entry_date <= $2::text::date)",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "net!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "9d98303b3c7c0e7dce3396660a374bea981a82b75faac946cb3a01d2f24c0c70"
+}

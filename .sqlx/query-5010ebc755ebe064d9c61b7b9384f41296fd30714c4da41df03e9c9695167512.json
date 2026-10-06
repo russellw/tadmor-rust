@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE accounting_periods SET status = 'open'\n             WHERE id = (SELECT period_id FROM journal_entries WHERE id = $1) AND status = 'closed'",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5010ebc755ebe064d9c61b7b9384f41296fd30714c4da41df03e9c9695167512"
+}

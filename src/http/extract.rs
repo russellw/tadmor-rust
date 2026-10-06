@@ -95,6 +95,23 @@ impl<S: Send + Sync> FromRequestParts<S> for DateRange {
     }
 }
 
+/// An optional `as_of` date query parameter; a malformed one is a 400.
+pub struct AsOf(pub Option<String>);
+
+impl<S: Send + Sync> FromRequestParts<S> for AsOf {
+    type Rejection = Error;
+
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Error> {
+        let Query(mut params) = Query::<HashMap<String, String>>::from_request_parts(parts, state)
+            .await
+            .map_err(|_| Error::bad_request("malformed query string"))?;
+        match params.remove("as_of").filter(|v| !v.is_empty()) {
+            Some(v) if !is_date(&v) => Err(Error::bad_request("as_of must be a YYYY-MM-DD date")),
+            v => Ok(AsOf(v)),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

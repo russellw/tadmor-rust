@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO fiscal_years (name, start_date, end_date)\n         SELECT 'FY' || to_char(($1::text::date + 1 + interval '1 year' - interval '1 day')::date, 'YYYY'),\n                $1::text::date + 1, ($1::text::date + 1 + interval '1 year' - interval '1 day')::date\n         WHERE NOT EXISTS (SELECT 1 FROM fiscal_years WHERE $1::text::date + 1 BETWEEN start_date AND end_date)\n         ON CONFLICT (name) DO NOTHING\n         RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "29a09ff0e19ce958b8db0e540bf328e9951c52ce374586fad335a7d709c230a2"
+}

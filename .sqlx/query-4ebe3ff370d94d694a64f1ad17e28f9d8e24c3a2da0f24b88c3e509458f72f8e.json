@@ -1,0 +1,50 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT v.product_id AS \"product_id!\", p.sku, p.name,\n               v.qty_on_hand::numeric(19,4)::text AS \"qty_on_hand!\",\n               v.value_on_hand::numeric(19,4)::text AS \"value_on_hand!\",\n               v.avg_unit_cost::numeric(19,4)::text AS \"avg_unit_cost!\"\n           FROM stock_valuation v JOIN products p ON p.id = v.product_id\n           ORDER BY p.sku",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "product_id!",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "sku",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "qty_on_hand!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "value_on_hand!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "avg_unit_cost!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      true,
+      false,
+      false,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "4ebe3ff370d94d694a64f1ad17e28f9d8e24c3a2da0f24b88c3e509458f72f8e"
+}

@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE accounting_periods SET status = 'closed' WHERE fiscal_year_id = $1::int8 AND status = 'open'",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "3964978786fa05b32ef6185265f9f26d6563794b88b6b1a2be8a822ade6f7b4b"
+}

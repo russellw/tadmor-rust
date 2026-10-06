@@ -1,0 +1,35 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT\n               COALESCE(sum(jl.base_debit - jl.base_credit)\n                   FILTER (WHERE $1::text IS NOT NULL AND je.entry_date < $1::text::date), 0)::numeric(19,4)::text AS \"opening!\",\n               COALESCE(sum(jl.base_debit - jl.base_credit)\n                   FILTER (WHERE ($1::text IS NULL OR je.entry_date >= $1::text::date)\n                             AND ($2::text IS NULL OR je.entry_date <= $2::text::date)), 0)::numeric(19,4)::text AS \"movement!\",\n               COALESCE(sum(jl.base_debit - jl.base_credit)\n                   FILTER (WHERE $2::text IS NULL OR je.entry_date <= $2::text::date), 0)::numeric(19,4)::text AS \"closing!\"\n           FROM journal_lines jl\n           JOIN journal_entries je ON je.id = jl.journal_entry_id\n           JOIN accounts a ON a.id = jl.account_id\n           WHERE je.status = 'posted' AND a.is_cash",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "opening!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "movement!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "closing!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "693120c069f659ca286cb94c3cdd6530bb4012b21534db913e63ffe200fc0b0c"
+}
