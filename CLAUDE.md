@@ -35,9 +35,9 @@ spec/, conformance/, and db/migrations/ are copies from tadmor (spec/UPSTREAM);
 never edit them here. Re-export from tadmor with spec/export.sh.
 Queries go through sqlx::query! and friends, checked at build time against .sqlx/.
 After adding or changing one, run `make sqlx-prepare` and commit .sqlx/ with the code.
-The exceptions are src/documents.rs, src/payments.rs and src/settlement.rs, where the
-document kinds differ only in names: their SQL is built at run time from each kind's
-description (`Kind`, `PaymentKind`, `Settler`). Table and column names there come only
+The exceptions are src/documents.rs, src/payments.rs, src/settlement.rs and src/orders.rs,
+where the document kinds differ only in names: their SQL is built at run time from each
+kind's description (`Kind`, `PaymentKind`, `Settler`, `Side`). Table and column names there come only
 from those descriptions, and every value is a bind parameter.
 Postgres builds those read shapes with json_build_object, every decimal cast to text.
 Before committing, run `make check` and `make test`; both must pass.

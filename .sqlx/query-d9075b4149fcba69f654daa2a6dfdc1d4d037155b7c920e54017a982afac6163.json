@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "WITH request AS (\n             SELECT order_line_id, qty FROM unnest($1::int8[], $2::text[]::numeric(19,4)[]) AS r(order_line_id, qty)\n         ), picked AS (\n             SELECT l.id AS order_line_id, l.product_id, round(l.unit_cost * $7::text::numeric, 4) AS unit_cost,\n                    CASE WHEN (SELECT count(*) FROM request) = 0 THEN f.qty_to_receive\n                         ELSE LEAST(f.qty_to_receive, COALESCE(r.qty, 0)) END AS qty\n             FROM purchase_order_lines l\n             JOIN purchase_order_line_fulfilment f ON f.order_line_id = l.id\n             JOIN products p ON p.id = l.product_id AND p.track_inventory AND p.is_active\n             LEFT JOIN request r ON r.order_line_id = l.id\n             WHERE l.order_id = $4::int8\n         )\n         INSERT INTO stock_movements (product_id, warehouse_id, movement_type, movement_date, quantity, unit_cost,\n                                      source_type, source_id, reference)\n         SELECT product_id, $3::int8, 'receipt', COALESCE($5::text::date, current_date), qty, unit_cost,\n                'purchase_order_line', order_line_id, $6\n         FROM picked WHERE qty > 0 ORDER BY order_line_id\n         RETURNING id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8Array",
+        "TextArray",
+        "Int8",
+        "Int8",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "d9075b4149fcba69f654daa2a6dfdc1d4d037155b7c920e54017a982afac6163"
+}

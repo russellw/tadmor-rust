@@ -11,17 +11,17 @@ probes, and implements sessions and users (spec/api.md §3, §5.1), master
 data (§5.2 to §5.6), the fiscal calendar with year-end close and reopen
 (§5.7), settings and exchange rates (§5.8), invoices, bills, credit notes
 and payments with posting, unposting and settlement, including realized
-exchange differences (§5.9), stock movements (§5.12), and journal
-entries and every report (§5.14). Orders, bank reconciliation, PDFs and
-email, and the UI are still to come. 29 of the 35 conformance cases
-pass.
+exchange differences (§5.9), sales and purchase orders with fulfilment
+(§5.10), stock movements (§5.12), and journal entries and every report
+(§5.14). Bank reconciliation, PDFs and email, and the UI are still to
+come. 32 of the 35 conformance cases pass.
 
 ## Layout
 
 ```
 src/               the server: services (auth, users, master, calendar,
-                   currency, documents, inventory, payments, posting,
-                   settlement, reporting, yearend) holding the business
+                   currency, documents, inventory, orders, payments,
+                   posting, settlement, reporting, yearend) holding the business
                    rules, http/ (routes, extractors, session middleware),
                    error (the API's error type), db, config
 tests/             integration tests, driving the router in-process

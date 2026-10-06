@@ -5,6 +5,7 @@ mod documents;
 mod extract;
 mod inventory;
 mod master;
+mod orders;
 mod payments;
 mod reports;
 mod session;
@@ -84,6 +85,7 @@ pub fn router(state: AppState) -> Router {
         .route("/inventory-valuation", get(reports::inventory_valuation))
         .merge(admin)
         .merge(crate::documents::KINDS.iter().fold(Router::new(), |r, kind| r.merge(documents::routes(kind))))
+        .merge(orders::routes())
         .merge(crate::payments::PAYMENT_KINDS.iter().fold(Router::new(), |r, kind| r.merge(payments::routes(kind))))
         .merge(
             ["customer-payments", "supplier-payments", "sales-credit-notes", "purchase-credit-notes"]

@@ -38,7 +38,9 @@ pub struct Kind {
     /// The party's control account column (A/R or A/P).
     pub control: &'static str,
     pub date: &'static str,
-    pub has_due_date: bool,
+    /// The optional later date's column (`due_date`, or an order's expected
+    /// date), named the same in requests and reads.
+    pub due: Option<&'static str>,
     pub price: &'static str,
     /// The line's own account column, and the product column it falls back to.
     pub account: &'static str,
@@ -70,7 +72,7 @@ pub static SALES_INVOICES: Kind = Kind {
     party_table: "customers",
     control: "ar_account_id",
     date: "invoice_date",
-    has_due_date: true,
+    due: Some("due_date"),
     price: "unit_price",
     account: "revenue_account_id",
     fallback: "revenue_account_id",
@@ -96,7 +98,7 @@ pub static PURCHASE_BILLS: Kind = Kind {
     party_table: "suppliers",
     control: "ap_account_id",
     date: "bill_date",
-    has_due_date: true,
+    due: Some("due_date"),
     price: "unit_cost",
     account: "expense_account_id",
     fallback: "inventory_account_id",
@@ -122,7 +124,7 @@ pub static SALES_CREDIT_NOTES: Kind = Kind {
     party_table: "customers",
     control: "ar_account_id",
     date: "credit_note_date",
-    has_due_date: false,
+    due: None,
     price: "unit_price",
     account: "revenue_account_id",
     fallback: "revenue_account_id",
@@ -148,7 +150,7 @@ pub static PURCHASE_CREDIT_NOTES: Kind = Kind {
     party_table: "suppliers",
     control: "ap_account_id",
     date: "credit_note_date",
-    has_due_date: false,
+    due: None,
     price: "unit_cost",
     account: "expense_account_id",
     fallback: "inventory_account_id",
@@ -242,7 +244,10 @@ impl DocumentInput {
             number: string(&m, kind.number)?,
             party_id: optional_int(&m, kind.party)?.unwrap_or(0),
             date: string(&m, kind.date)?,
-            due_date: if kind.has_due_date { optional_string(&m, "due_date")? } else { None },
+            due_date: match kind.due {
+                Some(column) => optional_string(&m, column)?,
+                None => None,
+            },
             currency_code: string(&m, "currency_code")?,
             reference: optional_string(&m, "reference")?,
             memo: optional_string(&m, "memo")?,
@@ -310,8 +315,8 @@ async fn insert_lines(tx: &mut PgConnection, kind: &Kind, id: i64, lines: &[Line
 /// Creates the document as a draft, with its lines, and returns its id.
 pub async fn create(pool: &PgPool, kind: &Kind, doc: DocumentInput) -> Result<i64> {
     doc.check(kind)?;
-    let due = if kind.has_due_date { ", due_date" } else { "" };
-    let due_value = if kind.has_due_date { ", $7::text::date" } else { "" };
+    let due = kind.due.map(|c| format!(", {c}")).unwrap_or_default();
+    let due_value = if kind.due.is_some() { ", $7::text::date" } else { "" };
     let sql = format!(
         "INSERT INTO {table} ({number}, {party}, {date}, currency_code, reference, memo{due})
          VALUES ($1, $2::int8, $3::text::date, $4, $5, $6{due_value}) RETURNING id",
@@ -328,7 +333,7 @@ pub async fn create(pool: &PgPool, kind: &Kind, doc: DocumentInput) -> Result<i6
         .bind(&doc.currency_code)
         .bind(&doc.reference)
         .bind(&doc.memo);
-    if kind.has_due_date {
+    if kind.due.is_some() {
         insert = insert.bind(&doc.due_date);
     }
     let id = i64::from(insert.fetch_one(&mut *tx).await?);
@@ -362,7 +367,7 @@ pub async fn update(pool: &PgPool, kind: &Kind, id: i64, doc: DocumentInput) -> 
             return Err(conflict("the document was produced from an order and cannot be edited"));
         }
     }
-    let due = if kind.has_due_date { ", due_date = $8::text::date" } else { "" };
+    let due = kind.due.map(|c| format!(", {c} = $8::text::date")).unwrap_or_default();
     let sql = format!(
         "UPDATE {table} SET {number} = $2, {party} = $3::int8, {date} = $4::text::date, currency_code = $5,
              reference = $6, memo = $7{due}
@@ -380,7 +385,7 @@ pub async fn update(pool: &PgPool, kind: &Kind, id: i64, doc: DocumentInput) -> 
         .bind(&doc.currency_code)
         .bind(&doc.reference)
         .bind(&doc.memo);
-    if kind.has_due_date {
+    if kind.due.is_some() {
         update = update.bind(&doc.due_date);
     }
     if update.execute(&mut *tx).await?.rows_affected() == 0 {
@@ -407,7 +412,7 @@ pub async fn delete(pool: &PgPool, kind: &Kind, id: i64) -> Result<()> {
 /// The SELECT of a kind's read shape, as JSON text, over `d` (the document)
 /// and `b` (its balance view row).
 fn read_sql(kind: &Kind) -> String {
-    let due = if kind.has_due_date { "'due_date', d.due_date::text," } else { "" };
+    let due = kind.due.map(|c| format!("'{c}', d.{c}::text,")).unwrap_or_default();
     format!(
         "SELECT json_build_object(
              'id', d.id, '{number}', d.{number}, '{party}', d.{party}, '{date}', d.{date}::text, {due}
