@@ -8,6 +8,7 @@ mod inventory;
 mod master;
 mod orders;
 mod payments;
+mod printing;
 mod reports;
 mod session;
 mod users;
@@ -27,6 +28,15 @@ pub use extract::is_date;
 #[derive(Clone)]
 pub struct AppState {
     pub pool: PgPool,
+    /// None when email is off.
+    pub mailer: Option<std::sync::Arc<crate::mailer::Mailer>>,
+}
+
+impl AppState {
+    /// A state with email off.
+    pub fn new(pool: PgPool) -> AppState {
+        AppState { pool, mailer: None }
+    }
 }
 
 pub fn router(state: AppState) -> Router {
@@ -100,6 +110,7 @@ pub fn router(state: AppState) -> Router {
         .merge(admin)
         .merge(crate::documents::KINDS.iter().fold(Router::new(), |r, kind| r.merge(documents::routes(kind))))
         .merge(orders::routes())
+        .merge(crate::printing::PRINTABLES.iter().fold(Router::new(), |r, p| r.merge(printing::routes(p))))
         .merge(crate::payments::PAYMENT_KINDS.iter().fold(Router::new(), |r, kind| r.merge(payments::routes(kind))))
         .merge(
             ["customer-payments", "supplier-payments", "sales-credit-notes", "purchase-credit-notes"]

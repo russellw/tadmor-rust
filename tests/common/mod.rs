@@ -40,7 +40,7 @@ pub async fn pool() -> PgPool {
 }
 
 pub async fn app() -> Router {
-    router(AppState { pool: pool().await })
+    router(AppState::new(pool().await))
 }
 
 /// A unique email for a test's own user, so tests sharing the database never
@@ -128,7 +128,7 @@ pub async fn admin() -> Client {
     let pool = pool().await;
     let email = email("admin");
     user(&pool, &email, "admin password", true).await;
-    let mut c = Client::new(router(AppState { pool }));
+    let mut c = Client::new(router(AppState::new(pool)));
     c.login(&email, "admin password").await;
     c
 }

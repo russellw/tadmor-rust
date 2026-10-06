@@ -26,7 +26,7 @@ async fn readyz_is_unavailable_without_one() {
     // Nothing listens on port 1, so every connection attempt fails.
     let options = db::options("postgres://tadmor@127.0.0.1:1/none").unwrap();
     let pool = db::pool_options().acquire_timeout(Duration::from_millis(500)).connect_lazy_with(options);
-    let (status, body) = common::get(router(AppState { pool }), "/readyz").await;
+    let (status, body) = common::get(router(AppState::new(pool)), "/readyz").await;
     assert_eq!(status, StatusCode::SERVICE_UNAVAILABLE);
     assert_eq!(body, json!({"status": "database unavailable"}));
 }

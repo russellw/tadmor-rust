@@ -155,6 +155,12 @@ else without a conversation first. In particular:
 - **No SQLx default features.** In particular no `tls-*`: the database is
   local, and the only TLS is lettre's, to the mail relay.
 - **No `sqlx-cli`** (above).
+- **No PDF, CSV, or compression crates.** Printed documents come from a
+  small PDF writer of our own (src/pdf.rs, as tadmor's Go one), using the
+  standard-14 Helvetica fonts, so nothing is embedded; its content
+  streams are uncompressed, since the standard library has no deflate.
+  Bank statement CSV is read by a small RFC 4180 reader in
+  src/banking.rs.
 - **No `rand`, `getrandom`, `base64`, or `hex` as direct dependencies.**
   Salts and session tokens are read from `/dev/urandom`, and stored and
   sent in hex, with a few lines of our own code.

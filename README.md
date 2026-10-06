@@ -12,17 +12,20 @@ data (§5.2 to §5.6), the fiscal calendar with year-end close and reopen
 (§5.7), settings and exchange rates (§5.8), invoices, bills, credit notes
 and payments with posting, unposting and settlement, including realized
 exchange differences (§5.9), sales and purchase orders with fulfilment
-(§5.10), stock movements (§5.12), bank reconciliation (§5.13), and
-journal entries and every report (§5.14). PDFs and email, and the UI,
-are still to come. 34 of the 35 conformance cases pass.
+(§5.10), printing and email (§5.11), stock movements (§5.12), bank
+reconciliation (§5.13), and journal entries and every report (§5.14):
+the whole JSON API, and all 35 conformance cases pass. The UI is still
+to come.
 
 ## Layout
 
 ```
 src/               the server: services (auth, banking, users, master, calendar,
                    currency, documents, inventory, orders, payments,
-                   posting, settlement, reporting, yearend) holding the business
-                   rules, http/ (routes, extractors, session middleware),
+                   posting, printing, settlement, reporting, yearend)
+                   holding the business
+                   rules; pdf, a small PDF writer, and mailer (lettre); http/
+                   (routes, extractors, session middleware);
                    error (the API's error type), db, config
 tests/             integration tests, driving the router in-process
 db/migrations/     tadmor's shared schema (a copy; see spec/UPSTREAM)
@@ -52,6 +55,9 @@ docs/              the stack decision
 | `DATABASE_URL` | yes | | Postgres connection string |
 | `HTTP_ADDR` | no | `:8080` | Listen address (`:port` means every interface) |
 | `PORT` | no | | Listen port; overrides `HTTP_ADDR` when set |
+| `SMTP_ADDR` | no | | SMTP server `host:port`; unset turns email off (the email endpoints answer 501) |
+| `SMTP_USER`, `SMTP_PASS` | no | | SMTP credentials; unset sends without authentication |
+| `MAIL_FROM` | with `SMTP_ADDR` | | The From address of outgoing mail |
 | `TEST_DATABASE_URL` | for tests | | Database the integration tests reset and use |
 
 ## Build, run, test

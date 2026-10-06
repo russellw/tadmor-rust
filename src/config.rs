@@ -1,5 +1,7 @@
 //! Runtime configuration from the environment, as tadmor reads it.
 
+use crate::mailer::SmtpConfig;
+
 /// The settings the server needs to start.
 #[derive(Debug, PartialEq)]
 pub struct Config {
@@ -8,6 +10,9 @@ pub struct Config {
     /// Listen address (`HTTP_ADDR`, or `:` and `PORT`), in Go's form, where
     /// `:8080` means every interface.
     pub http_addr: String,
+    /// Outbound email (`SMTP_ADDR`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`);
+    /// with no address, email is off.
+    pub smtp: SmtpConfig,
 }
 
 impl Config {
@@ -24,7 +29,13 @@ impl Config {
             Some(port) => format!(":{port}"),
             None => get("HTTP_ADDR").unwrap_or_else(|| ":8080".to_string()),
         };
-        Ok(Config { database_url, http_addr })
+        let smtp = SmtpConfig {
+            addr: get("SMTP_ADDR").unwrap_or_default(),
+            username: get("SMTP_USER").unwrap_or_default(),
+            password: get("SMTP_PASS").unwrap_or_default(),
+            from: get("MAIL_FROM").unwrap_or_default(),
+        };
+        Ok(Config { database_url, http_addr, smtp })
     }
 
     /// The listen address in the form `TcpListener::bind` accepts.

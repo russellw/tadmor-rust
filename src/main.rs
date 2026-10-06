@@ -35,10 +35,14 @@ async fn serve() -> Result<(), Box<dyn Error>> {
     let config = Config::from_env()?;
     let pool = db::connect(&config.database_url).await?;
     db::migrate(&pool).await?;
+    let mailer = tadmor::mailer::Mailer::new(&config.smtp)?.map(std::sync::Arc::new);
+    if mailer.is_none() {
+        eprintln!("tadmor: email is off (no SMTP_ADDR)");
+    }
     let addr = config.listen_addr();
     let listener = tokio::net::TcpListener::bind(&addr).await?;
     eprintln!("tadmor: listening on {addr}");
-    axum::serve(listener, router(AppState { pool })).with_graceful_shutdown(shutdown()).await?;
+    axum::serve(listener, router(AppState { pool, mailer })).with_graceful_shutdown(shutdown()).await?;
     Ok(())
 }
 
