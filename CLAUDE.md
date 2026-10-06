@@ -40,6 +40,13 @@ where the document kinds differ only in names: their SQL is built at run time fr
 kind's description (`Kind`, `PaymentKind`, `Settler`, `Side`). Table and column names there come only
 from those descriptions, and every value is a bind parameter.
 Postgres builds those read shapes with json_build_object, every decimal cast to text.
+The UI (src/ui/) calls the same services as the API; handlers build view models of sections
+(view.rs) that a few Askama templates lay out. static/app.js is the only script and
+app.css the only stylesheet: the Content Security Policy forbids inline script and style,
+so never add style="" or <script> with code (data goes in a <script type="application/json">).
+Every UI form posts `_token`; handlers check it with FormData::check before anything else.
+Amounts are shown as the database's exact decimals and summed as integers of
+ten-thousandths (ui::reports::units), never floats.
 Before committing, run `make check` and `make test`; both must pass.
 
 Version control:

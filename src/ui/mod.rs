@@ -268,11 +268,8 @@ async fn login(State(state): State<AppState>, headers: axum::http::HeaderMap, Fo
             response.headers_mut().insert(SET_COOKIE, cookie);
             response
         }
-        Err(err) => {
-            let mut response = render(LoginTemplate { next: &next, email: &f.email, error: Some(&err.message) });
-            *response.status_mut() = err.status;
-            response
-        }
+        // The login screen again, with the error; a page, not an API status.
+        Err(err) => render(LoginTemplate { next: &next, email: &f.email, error: Some(&err.message) }),
     }
 }
 

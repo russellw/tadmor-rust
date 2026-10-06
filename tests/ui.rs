@@ -16,8 +16,8 @@ async fn signing_in_and_out() {
     let email = common::email("ui");
     common::user(&pool, &email, "the password", false).await;
     let r = b.submit("/login", &[("email", &email), ("password", "wrong password"), ("next", "/sales-invoices")]).await;
-    assert_eq!(r.status, StatusCode::UNAUTHORIZED);
     assert!(r.html.contains("invalid email or password"), "the error is shown");
+    assert!(b.cookie.is_none(), "and no session");
     let r = b.submit("/login", &[("email", &email), ("password", "the password"), ("next", "//evil.example")]).await;
     assert_eq!(r.location.as_deref(), Some("/"), "only local paths");
     // G2: the user's name, and signing out.

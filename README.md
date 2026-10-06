@@ -6,26 +6,24 @@ checked by its `conformance/` suite, built on Axum, SQLx and server-rendered
 Askama templates so the stacks can be compared. See
 [`docs/stack.md`](docs/stack.md) for why this stack, and what it costs.
 
-Status: in progress. The server applies the shared schema, answers the
-probes, and implements sessions and users (spec/api.md §3, §5.1), master
-data (§5.2 to §5.6), the fiscal calendar with year-end close and reopen
-(§5.7), settings and exchange rates (§5.8), invoices, bills, credit notes
-and payments with posting, unposting and settlement, including realized
-exchange differences (§5.9), sales and purchase orders with fulfilment
-(§5.10), printing and email (§5.11), stock movements (§5.12), bank
-reconciliation (§5.13), and journal entries and every report (§5.14):
-the whole JSON API, and all 35 conformance cases pass. The UI is still
-to come.
+Status: complete against the spec at `spec/UPSTREAM`. The server
+implements the whole JSON API, and all 35 conformance cases pass. The
+user interface, server-rendered at the root path, covers every item of
+the checklist in `spec/domain.md` §13; `docs/ui-coverage.md` records
+where each is met and how it was checked.
 
 ## Layout
 
 ```
+templates/         the UI's Askama templates
+static/            app.js (the line editor, the only script) and app.css
 src/               the server: services (auth, banking, users, master, calendar,
                    currency, documents, inventory, orders, payments,
                    posting, printing, settlement, reporting, yearend)
                    holding the business
                    rules; pdf, a small PDF writer, and mailer (lettre); http/
-                   (routes, extractors, session middleware);
+                   (the JSON API's routes, extractors, session middleware);
+                   ui/ (the screens);
                    error (the API's error type), db, config
 tests/             integration tests, driving the router in-process
 db/migrations/     tadmor's shared schema (a copy; see spec/UPSTREAM)
@@ -35,7 +33,7 @@ conformance/       tadmor's black-box conformance suite (a copy)
 vendor/            every third-party crate, committed (tools/vendor.py)
 tools/             vendor.py (vendoring and dependencies.json), sqlx-prepare.sh,
                    conformance.sh
-docs/              the stack decision
+docs/              the stack decision, and the UI's coverage of the checklist
 ```
 
 ## Prerequisites
@@ -67,7 +65,8 @@ only from `vendor/` and checks queries only against `.sqlx/`.
 
 ```sh
 make db             # create tadmor_rust, tadmor_rust_test, tadmor_rust_prepare
-make run            # build and run on 127.0.0.1:8080 (migrates on start)
+make run            # build and run on 127.0.0.1:8080 (migrates on start);
+                    # the UI is at http://127.0.0.1:8080/
 make test           # unit and integration tests
 make check          # vendor/ and .sqlx/ are complete and consistent
 make conformance    # tadmor's suite against a fresh release server
