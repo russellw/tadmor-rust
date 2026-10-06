@@ -302,3 +302,69 @@ async fn reports_and_journal_entries() {
     let bad = b.get("/reports/profit-and-loss?from=someday").await;
     assert!(bad.html.contains("from must be a date"));
 }
+
+#[tokio::test]
+async fn accounting_screens() {
+    let mut b = Browser::admin().await;
+    let mut api = common::admin().await;
+    // A1: a fiscal year, a proposed period, and closing it in one step.
+    let y = 4900 + (std::process::id() % 90) as i32;
+    b.get("/fiscal-years/new").await;
+    let fy_name = code("FY");
+    let r = b.submit("/fiscal-years", &[("name", &fy_name), ("start_date", &format!("{y}-01-01")), ("end_date", &format!("{y}-12-31"))]).await;
+    assert_eq!(r.location.as_deref(), Some("/periods"));
+    assert_eq!(b.get("/fiscal-years").await.location.as_deref(), Some("/periods"), "years are listed under periods");
+    assert_eq!(b.get("/logout").await.status, StatusCode::NOT_FOUND, "a wrong method is not found (G8)");
+    let periods = b.get("/periods").await;
+    let fy_id = {
+        let ours = &periods.html[periods.html.find(&fy_name).unwrap()..];
+        let at = ours.find(">Edit year<").unwrap();
+        let href = &ours[ours[..at].rfind("href=\"/fiscal-years/").unwrap() + 20..at];
+        href[..href.find('"').unwrap()].to_string()
+    };
+    b.get("/accounting-periods/new").await;
+    let r = b.submit("/accounting-periods", &[("fiscal_year_id", &fy_id), ("name", "Jan"), ("start_date", &format!("{y}-01-01")), ("end_date", &format!("{y}-01-31"))]).await;
+    assert_eq!(r.location.as_deref(), Some("/periods"), "{}", r.html);
+    let proposal = b.get("/accounting-periods/new").await;
+    assert!(proposal.html.contains(&format!("value=\"{y}-02\"")) || proposal.html.contains("-02\""), "the month after the latest is proposed");
+    let periods = b.get("/periods").await;
+    let ours = &periods.html[periods.html.find(&fy_name).unwrap()..];
+    let at = ours.find("/toggle").unwrap();
+    let toggle = &ours[ours[..at].rfind('"').unwrap() + 1..at + 7];
+    let r = b.submit(toggle, &[]).await;
+    assert!(b.follow(r).await.html.contains("Reopen Jan"), "closed in one step");
+
+    // A2: year-end states what will happen and proposes Retained Earnings.
+    let close = b.get(&format!("/fiscal-years/{fy_id}/close")).await;
+    assert!(close.html.contains("Closing the year will") && close.html.contains("selected>3000 Retained Earnings"));
+
+    // A3: exchange rates.
+    b.get("/exchange-rates/new").await;
+    let date = format!("{y}-06-30");
+    let r = b.submit("/exchange-rates", &[("currency_code", "CAD"), ("rate_date", &date), ("rate", "0.73")]).await;
+    assert!(b.follow(r).await.html.contains("0.73"));
+    let ask = b.get(&format!("/exchange-rates/CAD/{date}/delete")).await;
+    assert!(ask.html.contains("Keep it"));
+    b.submit(&format!("/exchange-rates/CAD/{date}/delete"), &[]).await;
+    assert!(!b.get("/exchange-rates").await.html.contains(&date));
+
+    // A4, A5: a statement, imported, matched, reconciled.
+    let bank = common::create(&mut api, "/api/accounts", serde_json::json!({"code": code("A"), "name": "Bank", "account_type": "asset", "is_postable": true, "is_cash": true})).await;
+    let (cust, _) = common::party(&mut api, "customers").await;
+    let pay = common::create(&mut api, "/api/customer-payments", serde_json::json!({"customer_id": cust, "payment_date": format!("{y}-02-05"), "currency_code": "USD", "amount": "100", "deposit_account_id": bank})).await;
+    // February: January was closed above.
+    assert_eq!(api.send("POST", &format!("/api/customer-payments/{pay}/post"), None).await.status, StatusCode::OK);
+    let form = b.get("/bank-statements/new").await;
+    assert!(form.html.contains(&format!("value=\"{bank}\"")), "the cash account is offered");
+    let r = b.submit("/bank-statements", &[("account_id", &bank.to_string()), ("statement_date", &format!("{y}-02-28")), ("opening_balance", "0"), ("closing_balance", "100")]).await;
+    let st = id_of(&r.location);
+    let page = b.follow(r).await;
+    assert!(page.html.contains("Import CSV") && page.html.contains("Add a line"));
+    let r = b.submit(&format!("/bank-statements/{st}/import"), &[("csv", &format!("date,description,amount\n{y}-02-05,Deposit,100\n"))]).await;
+    assert!(r.html.contains("Imported 1 line(s).") && r.html.contains("name=\"journal_line_id\""), "a candidate of its amount is offered");
+    let r = b.submit(&format!("/bank-statements/{st}/auto-match"), &[]).await;
+    assert!(r.html.contains("Matched 1 line(s)."));
+    let r = b.submit(&format!("/bank-statements/{st}/reconcile"), &[]).await;
+    let reconciled = b.follow(r).await;
+    assert!(reconciled.html.contains("reconciled") && reconciled.html.contains(">Reopen<"));
+}

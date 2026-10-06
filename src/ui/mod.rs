@@ -112,6 +112,7 @@ pub fn router(state: AppState) -> Router<AppState> {
         .merge(reports::routes())
         .merge(accounting::routes())
         .fallback(not_found)
+        .method_not_allowed_fallback(not_found)
         .layer(from_fn_with_state(state, require_login))
         .layer(axum::middleware::from_fn(security_headers))
 }

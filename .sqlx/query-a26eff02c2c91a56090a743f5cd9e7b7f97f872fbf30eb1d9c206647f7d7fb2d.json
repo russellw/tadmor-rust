@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id FROM accounts WHERE code = '3000' AND account_type = 'equity' AND is_active AND is_postable",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "a26eff02c2c91a56090a743f5cd9e7b7f97f872fbf30eb1d9c206647f7d7fb2d"
+}

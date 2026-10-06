@@ -57,11 +57,6 @@ pub fn required(mut f: Field) -> Field {
     f
 }
 
-pub fn readonly(mut f: Field) -> Field {
-    f.readonly = true;
-    f
-}
-
 /// A select over `options`, with a blank choice labelled `blank`.
 pub fn select(label: &str, name: &str, record: &Value, blank: &str, options: lookups::Options) -> Field {
     let mut f = field(label, name, FieldKind::Select, record);

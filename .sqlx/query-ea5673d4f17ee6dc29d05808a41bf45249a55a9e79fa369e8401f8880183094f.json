@@ -1,0 +1,38 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT p.fiscal_year_id,\n               to_char(p.end_date + 1, 'YYYY-MM') AS \"name!\",\n               (p.end_date + 1)::text AS \"start!\",\n               (date_trunc('month', p.end_date + 1) + interval '1 month - 1 day')::date::text AS \"end!\"\n           FROM accounting_periods p ORDER BY p.end_date DESC LIMIT 1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "fiscal_year_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "start!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "end!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "ea5673d4f17ee6dc29d05808a41bf45249a55a9e79fa369e8401f8880183094f"
+}
