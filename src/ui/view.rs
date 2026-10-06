@@ -112,6 +112,8 @@ impl Field {
 #[derive(Clone, Debug, Default)]
 pub struct Form {
     pub action: String,
+    /// A filter that reads with GET (no token); otherwise the form posts.
+    pub get: bool,
     pub fields: Vec<Field>,
     pub submit: String,
     pub error: Option<String>,

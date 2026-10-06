@@ -46,3 +46,6 @@ body.login { display: flex; align-items: center; justify-content: center; min-he
 .lines input, .lines select { max-width: none; min-width: 60px; }
 .lines td { padding: 4px; }
 .lines .wide { min-width: 180px; }
+.filters { display: flex; flex-wrap: wrap; gap: 0 16px; align-items: flex-end; max-width: none; }
+.filters .field { margin-bottom: 0; }
+.filters .actions { margin: 0; }

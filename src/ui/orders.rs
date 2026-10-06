@@ -367,7 +367,7 @@ async fn document_form_page(pool: &PgPool, session: &Session, s: &'static OrderS
     match result {
         Ok(fields) => {
             let path = format!("/{}/{id}", s.side.kind.path);
-            let form = FormView { action: format!("{path}/{}", s.document_verb), fields, submit: format!("Create draft {}", s.document_verb), error, cancel: Some(path) };
+            let form = FormView { get: false, action: format!("{path}/{}", s.document_verb), fields, submit: format!("Create draft {}", s.document_verb), error, cancel: Some(path) };
             page(session, &format!("{} the order", capitalize(s.document_verb)), vec![Section::Text("Lower a quantity for a partial document; a line at 0 is left out.".into()), Section::Form(form)])
         }
         Err(err) if err.status == axum::http::StatusCode::UNPROCESSABLE_ENTITY => detail(pool, session, s, id, Some(err.message), None).await,
@@ -410,7 +410,7 @@ async fn stock_form_page(pool: &PgPool, session: &Session, s: &'static OrderScre
     match result {
         Ok(fields) => {
             let path = format!("/{}/{id}", s.side.kind.path);
-            let form = FormView { action: format!("{path}/{}", s.stock_verb), fields, submit: capitalize(s.stock_verb), error, cancel: Some(path) };
+            let form = FormView { get: false, action: format!("{path}/{}", s.stock_verb), fields, submit: capitalize(s.stock_verb), error, cancel: Some(path) };
             page(session, &format!("{} the order", capitalize(s.stock_verb)), vec![Section::Text("Only lines of stocked products are offered. Lower a quantity for a partial movement.".into()), Section::Form(form)])
         }
         Err(err) if err.status == axum::http::StatusCode::UNPROCESSABLE_ENTITY => detail(pool, session, s, id, Some(err.message), None).await,
@@ -504,7 +504,7 @@ async fn movement_form(pool: &PgPool, session: &Session, record: &Value, id: Opt
         Some(id) => ("Edit stock movement".to_string(), format!("/stock-movements/{id}"), format!("/stock-movements/{id}")),
         None => ("New stock movement".to_string(), "/stock-movements".to_string(), "/stock-movements".to_string()),
     };
-    page(session, &title, vec![Section::Form(FormView { action, fields, submit: "Save".into(), error, cancel: Some(cancel) })])
+    page(session, &title, vec![Section::Form(FormView { get: false, action, fields, submit: "Save".into(), error, cancel: Some(cancel) })])
 }
 
 /// The movement a posted form describes, its quantity signed by the type.
@@ -648,7 +648,7 @@ async fn movement_detail(pool: &PgPool, session: &Session, id: i64, error: Optio
                     let grni = sqlx::query_scalar!("SELECT id FROM accounts WHERE code = '2150' AND is_active AND is_postable").fetch_optional(pool).await?;
                     let mut credit = select("Account to credit (usually Goods Received Not Invoiced)", "credit_account_id", &json!({"credit_account_id": grni.map(|g| g.to_string())}), "(choose)", accounts);
                     credit.required = true;
-                    post_form = Some(Section::Form(FormView { action: format!("{path}/post"), fields: vec![credit], submit: "Post receipt".into(), error: None, cancel: None }));
+                    post_form = Some(Section::Form(FormView { get: false, action: format!("{path}/post"), fields: vec![credit], submit: "Post receipt".into(), error: None, cancel: None }));
                 }
                 _ => sections.push(Section::Text("Only receipts and issues post to the ledger.".into())),
             }

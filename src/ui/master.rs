@@ -101,7 +101,7 @@ async fn form_page<R: Resource>(pool: &PgPool, session: &Session, record: &Value
         Some(key) => (format!("Edit {}", R::NOUN), format!("{}/{key}", R::PATH), "Save"),
         None => (format!("New {}", R::NOUN), R::PATH.to_string(), "Create"),
     };
-    let form = FormView { action, fields, submit: submit.into(), error, cancel: Some(R::PATH.into()) };
+    let form = FormView { get: false, action, fields, submit: submit.into(), error, cancel: Some(R::PATH.into()) };
     page(session, &title, vec![Section::Form(form)])
 }
 
@@ -704,7 +704,7 @@ fn user_fields(r: &Value, creating: bool) -> Vec<Field> {
 }
 
 fn user_form(session: &Session, title: &str, action: String, fields: Vec<Field>, error: Option<String>, extra: Vec<Section>) -> Response {
-    let form = FormView { action, fields, submit: "Save".into(), error, cancel: Some("/users".into()) };
+    let form = FormView { get: false, action, fields, submit: "Save".into(), error, cancel: Some("/users".into()) };
     let mut sections = vec![Section::Form(form)];
     sections.extend(extra);
     page(session, title, sections)
@@ -798,7 +798,7 @@ async fn users_update(State(st): State<AppState>, session: Session, Path(user): 
 
 fn password_form(session: &Session, user: i64, error: Option<String>) -> Response {
     let fields = vec![required(Field::new("New password (at least 8 characters)", "password", FieldKind::Password))];
-    let form = FormView { action: format!("/users/{user}/password"), fields, submit: "Set password".into(), error, cancel: Some(format!("/users/{user}")) };
+    let form = FormView { get: false, action: format!("/users/{user}/password"), fields, submit: "Set password".into(), error, cancel: Some(format!("/users/{user}")) };
     page(session, "Reset password", vec![Section::Text("Setting a new password signs the user out everywhere.".into()), Section::Form(form)])
 }
 
@@ -843,7 +843,7 @@ async fn settings_view(pool: &PgPool, session: &Session, record: &Value, error: 
             .into(),
     )];
     if session.user.is_admin {
-        let form = FormView { action: "/settings".into(), fields: vec![base, fx], submit: "Save".into(), error, cancel: None };
+        let form = FormView { get: false, action: "/settings".into(), fields: vec![base, fx], submit: "Save".into(), error, cancel: None };
         sections.push(Section::Form(form));
     } else {
         base.readonly = true;

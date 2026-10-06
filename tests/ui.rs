@@ -268,3 +268,37 @@ async fn an_order_through_its_fulfilment() {
     assert!(r.html.contains("partly fulfilled"));
     assert!(b.get("/sales-orders").await.html.contains(&number));
 }
+
+#[tokio::test]
+async fn reports_and_journal_entries() {
+    let mut b = Browser::admin().await;
+    let mut api = common::admin().await;
+    let y = common::open_year(&mut api).await;
+    let (cust, l) = common::party(&mut api, "customers").await;
+    for (n, amount) in [(1, "100"), (2, "50.5")] {
+        let id = common::create(&mut api, "/api/sales-invoices", serde_json::json!({"invoice_number": code("INV"), "customer_id": cust,
+            "invoice_date": format!("{y}-02-0{n}"), "currency_code": "USD", "lines": [{"description": "x", "unit_price": amount, "revenue_account_id": l.detail}]})).await;
+        api.send("POST", &format!("/api/sales-invoices/{id}/post"), None).await;
+    }
+    let range = format!("from={y}-01-01&to={y}-12-31");
+    // R1: sections with totals and net income.
+    let pl = b.get(&format!("/reports/profit-and-loss?{range}")).await;
+    assert!(pl.html.contains("Total revenue") && pl.html.contains("Net income"));
+    // R5: a running balance: 100, then 150.5.
+    let ledger = b.get(&format!("/reports/ledger/{}?{range}", l.control)).await;
+    assert!(ledger.html.contains("100.00") && ledger.html.contains("150.50"), "{}", ledger.html);
+    let at = ledger.html.find("href=\"/journal-entries/").unwrap() + 6;
+    let entry = ledger.html[at..at + ledger.html[at..].find('"').unwrap()].to_string();
+    // R6: the entry links each account to its ledger.
+    let e = b.get(&entry).await;
+    assert!(e.html.contains(&format!("href=\"/reports/ledger/{}\"", l.control)) && e.html.contains("Exchange rate"));
+    // R2, R3, R4, R7, R8 render.
+    for path in ["/reports/balance-sheet", "/reports/cash-flow", "/reports/trial-balance", "/reports/ar-aging", "/reports/ap-aging", "/reports/inventory-valuation"] {
+        assert_eq!(b.get(path).await.status, StatusCode::OK, "{path}");
+    }
+    assert!(b.get("/reports/balance-sheet").await.html.contains("Liabilities + equity + current earnings"));
+    assert!(b.get("/reports/ar-aging").await.html.contains("Total"));
+    // A malformed date is shown, not a failure.
+    let bad = b.get("/reports/profit-and-loss?from=someday").await;
+    assert!(bad.html.contains("from must be a date"));
+}

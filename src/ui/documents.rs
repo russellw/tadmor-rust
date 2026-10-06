@@ -655,7 +655,7 @@ pub async fn applications_table(pool: &PgPool, settler: &Settler, id: i64, sales
 pub fn email_form(base_path: &str) -> Section {
     let mut to = Field::new("Email the PDF to (blank: the counterparty's email on file)", "to", FieldKind::Text);
     to.help = Some("Separate several addresses with commas.".into());
-    Section::Form(FormView { action: format!("{base_path}/email"), fields: vec![to], submit: "Send".into(), error: None, cancel: None })
+    Section::Form(FormView { get: false, action: format!("{base_path}/email"), fields: vec![to], submit: "Send".into(), error: None, cancel: None })
 }
 
 // ---------------------------------------------------------------------------
@@ -759,7 +759,7 @@ async fn payment_form(pool: &PgPool, session: &Session, s: &PaymentScreen, recor
         Some(id) => (format!("Edit {}", s.noun), format!("/{}/{id}", s.kind.path), format!("/{}/{id}", s.kind.path)),
         None => (format!("New {}", s.noun), format!("/{}", s.kind.path), format!("/{}", s.kind.path)),
     };
-    page(session, &title, vec![Section::Form(FormView { action, fields, submit: "Save".into(), error, cancel: Some(cancel) })])
+    page(session, &title, vec![Section::Form(FormView { get: false, action, fields, submit: "Save".into(), error, cancel: Some(cancel) })])
 }
 
 fn posted_payment(k: &PaymentKind, form: &FormData) -> Result<PaymentInput> {

@@ -28,8 +28,8 @@
 {% if let Some(e) = error %}<p class="error" role="alert">{{ e }}</p>{% endif %}
 </div>
 {% when Section::Form(form) %}
-<form method="post" action="{{ form.action }}" class="form">
-<input type="hidden" name="_token" value="{{ chrome.token }}">
+{% if form.get %}<form method="get" action="{{ form.action }}" class="form filters">{% else %}<form method="post" action="{{ form.action }}" class="form">
+<input type="hidden" name="_token" value="{{ chrome.token }}">{% endif %}
 {% for f in form.fields %}{% call m::field(f, chrome.token) %}{% endcall %}{% endfor %}
 <div class="actions"><button type="submit">{{ form.submit }}</button>{% if let Some(c) = form.cancel %} <a href="{{ c }}">Cancel</a>{% endif %}
 {% if let Some(e) = form.error %}<p class="error" role="alert">{{ e }}</p>{% endif %}</div>
