@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT s.status FROM bank_statement_lines l JOIN bank_statements s ON s.id = l.statement_id WHERE l.id = $1::int8",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "status",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "9e1679037c65df82e75b85832a869855127a96da0746b53120d56d9fd3a35958"
+}

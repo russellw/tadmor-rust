@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE bank_statement_lines l SET journal_line_id = c.id\n             FROM (SELECT jl.id FROM bank_statement_lines b\n                   JOIN bank_statements s ON s.id = b.statement_id\n                   JOIN journal_lines jl ON jl.account_id = s.account_id AND jl.debit - jl.credit = b.amount\n                   JOIN journal_entries je ON je.id = jl.journal_entry_id AND je.status = 'posted'\n                   WHERE b.id = $1\n                     AND NOT EXISTS (SELECT 1 FROM bank_statement_lines used WHERE used.journal_line_id = jl.id)\n                   ORDER BY abs(je.entry_date - b.txn_date), jl.id\n                   LIMIT 1) c\n             WHERE l.id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "db3fe2399692b87f0a5689e26945e0e35671b7d9b5d38b149d6d87913850e635"
+}

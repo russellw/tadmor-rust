@@ -1,0 +1,76 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT l.id, l.line_no, l.txn_date::text AS \"txn_date!\", l.description, l.reference, l.amount::text AS \"amount!\",\n               l.journal_line_id, je.id AS \"journal_entry_id?\", je.entry_date::text AS entry_date, je.memo AS \"entry_memo?\"\n           FROM bank_statement_lines l\n           LEFT JOIN journal_lines jl ON jl.id = l.journal_line_id\n           LEFT JOIN journal_entries je ON je.id = jl.journal_entry_id\n           WHERE l.statement_id = $1::int8 ORDER BY l.line_no",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "line_no",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "txn_date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "reference",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "amount!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "journal_line_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 7,
+        "name": "journal_entry_id?",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 8,
+        "name": "entry_date",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "entry_memo?",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      null,
+      false,
+      true,
+      null,
+      true,
+      false,
+      null,
+      true
+    ]
+  },
+  "hash": "b7de1525aa382a1bc968126e345c07c567bf18116fede5050b2a7efae43263fd"
+}

@@ -1,0 +1,94 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT s.id, s.account_id, a.code AS account_code, a.name AS account_name, s.statement_date::text AS \"statement_date!\",\n               s.opening_balance::text AS \"opening_balance!\", s.closing_balance::text AS \"closing_balance!\", s.reference, s.status,\n               count(l.id) AS \"line_count!\", count(l.journal_line_id) AS \"matched_count!\",\n               COALESCE(sum(l.amount), 0)::numeric(19,4)::text AS \"lines_total!\",\n               (s.opening_balance + COALESCE(sum(l.amount), 0) - s.closing_balance)::numeric(19,4)::text AS \"difference!\"\n           FROM bank_statements s\n           JOIN accounts a ON a.id = s.account_id\n           LEFT JOIN bank_statement_lines l ON l.statement_id = s.id\n           WHERE s.id = $1::int8\n           GROUP BY s.id, a.id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "account_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "account_code",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "account_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "statement_date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "opening_balance!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "closing_balance!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "reference",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "status",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "line_count!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 10,
+        "name": "matched_count!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 11,
+        "name": "lines_total!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 12,
+        "name": "difference!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      null,
+      null,
+      null,
+      true,
+      false,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "28c68cd451116c81a65d94d4ca24dd7e839ebe74df7ff6fea3c4b8641696640b"
+}

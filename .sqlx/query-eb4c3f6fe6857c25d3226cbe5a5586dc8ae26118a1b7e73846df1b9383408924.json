@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE bank_statements SET status = 'reconciled', reconciled_at = now() WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "eb4c3f6fe6857c25d3226cbe5a5586dc8ae26118a1b7e73846df1b9383408924"
+}

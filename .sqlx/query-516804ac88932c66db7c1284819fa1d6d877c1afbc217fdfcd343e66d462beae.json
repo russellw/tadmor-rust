@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE bank_statements SET account_id = $2::int8, statement_date = $3::text::date,\n             opening_balance = $4::text::numeric, closing_balance = $5::text::numeric, reference = $6\n         WHERE id = $1::int8",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "516804ac88932c66db7c1284819fa1d6d877c1afbc217fdfcd343e66d462beae"
+}

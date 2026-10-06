@@ -1,6 +1,7 @@
 //! The HTTP surface: the probes at the root and the JSON API under /api/
 //! (spec/api.md). The UI is to come.
 
+mod banking;
 mod documents;
 mod extract;
 mod inventory;
@@ -21,6 +22,8 @@ use sqlx::PgPool;
 
 use crate::error::Error;
 
+pub use extract::is_date;
+
 #[derive(Clone)]
 pub struct AppState {
     pub pool: PgPool,
@@ -34,6 +37,7 @@ pub fn router(state: AppState) -> Router {
         .route("/fiscal-years/{id}/close", post(reports::close_year))
         .route("/fiscal-years/{id}/reopen", post(reports::reopen_year))
         .route("/stock-movements/{id}/unpost", post(inventory::unpost))
+        .route("/bank-statements/{id}/reopen", post(banking::reopen))
         .route_layer(from_fn(session::require_admin));
 
     // Authentication wraps the whole API, unknown paths included, so they
@@ -75,6 +79,16 @@ pub fn router(state: AppState) -> Router {
         .route("/stock-movements", get(inventory::list).post(inventory::create))
         .route("/stock-movements/{id}", get(inventory::get).put(inventory::update).delete(inventory::delete))
         .route("/stock-movements/{id}/post", post(inventory::post))
+        .route("/bank-statements", get(banking::list).post(banking::create))
+        .route("/bank-statements/{id}", get(banking::get).put(banking::update).delete(banking::delete))
+        .route("/bank-statements/{id}/lines", get(banking::lines).post(banking::add_line))
+        .route("/bank-statements/{id}/import", post(banking::import))
+        .route("/bank-statements/{id}/candidates", get(banking::candidates))
+        .route("/bank-statements/{id}/auto-match", post(banking::auto_match))
+        .route("/bank-statements/{id}/reconcile", post(banking::reconcile))
+        .route("/bank-statement-lines/{id}", axum::routing::delete(banking::delete_line))
+        .route("/bank-statement-lines/{id}/match", post(banking::match_line))
+        .route("/bank-statement-lines/{id}/unmatch", post(banking::unmatch_line))
         .route("/journal-entries/{id}", get(documents::journal_entry))
         .route("/trial-balance", get(documents::trial_balance))
         .route("/profit-and-loss", get(reports::profit_and_loss))

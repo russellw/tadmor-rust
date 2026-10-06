@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT jl.id AS journal_line_id, je.id AS journal_entry_id, je.entry_date::text AS \"entry_date!\", je.reference,\n               COALESCE(jl.memo, je.memo) AS memo, (jl.debit - jl.credit)::numeric(19,4)::text AS \"amount!\"\n           FROM journal_lines jl\n           JOIN journal_entries je ON je.id = jl.journal_entry_id\n           WHERE je.status = 'posted'\n             AND jl.account_id = (SELECT account_id FROM bank_statements WHERE id = $1::int8)\n             AND NOT EXISTS (SELECT 1 FROM bank_statement_lines b WHERE b.journal_line_id = jl.id)\n           ORDER BY je.entry_date, je.id, jl.line_no",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "journal_line_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "journal_entry_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "entry_date!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "reference",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "memo",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "amount!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      null,
+      true,
+      null,
+      null
+    ]
+  },
+  "hash": "43392e05da570825c6e192f9eb0be9fadf1539dad627441a59ad05c5ec7536b6"
+}
