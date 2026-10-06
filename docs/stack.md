@@ -177,7 +177,10 @@ else without a conversation first. In particular:
   clone, built in an `ubuntu:26.04` container with `--network=none`, the
   host's `/usr` and `/etc/alternatives` mounted read-only, and an empty
   `CARGO_HOME`, built `--release --locked` twice into separate target
-  directories, producing byte-identical 1.7 MB binaries.
+  directories, producing byte-identical 1.7 MB binaries. That was before
+  the server existed; measured again the same way on 2026-10-06 at
+  `05cf274`, with the API and UI complete, the two builds were again
+  byte-identical, at 13.1 MB.
 - **Other platforms' crates are stubs.** `Cargo.lock` covers every
   platform, and Cargo reads every locked crate's manifest even when it
   will not build it. The 51 crates that only other platforms use
