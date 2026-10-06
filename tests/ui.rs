@@ -107,3 +107,103 @@ async fn administrator_only_screens() {
     let r = admin.submit(&path, &[("email", &my_email), ("full_name", "Test User"), ("is_active", "true")]).await;
     assert!(r.html.contains("you cannot remove your own administrator access"));
 }
+
+/// The id at the end of a redirect's location.
+fn id_of(location: &Option<String>) -> String {
+    location.as_deref().unwrap().rsplit('/').next().unwrap().to_string()
+}
+
+#[tokio::test]
+async fn an_invoice_through_the_screens() {
+    let mut b = Browser::admin().await;
+    let mut api = common::admin().await;
+    let y = common::open_year(&mut api).await;
+    let (cust, l) = common::party(&mut api, "customers").await;
+    let (cust, income) = (cust.to_string(), l.detail.to_string());
+
+    // D2: the line editor, its script data, and a refusal kept with what was typed.
+    let form = b.get("/sales-invoices/new").await;
+    assert!(form.html.contains("id=\"client-data\"") && form.html.contains("id=\"line-template\""));
+    let number = code("INV");
+    let date = format!("{y}-03-15");
+    let mut fields = vec![
+        ("invoice_number", number.as_str()), ("customer_id", cust.as_str()), ("invoice_date", date.as_str()), ("currency_code", "USD"),
+        ("line_product_id", ""), ("line_description", "Consulting"), ("line_quantity", "2"), ("line_price", "10.005"),
+        ("line_account_id", income.as_str()), ("line_tax_code", ""), ("line_tax_rate", "0"),
+        ("line_product_id", ""), ("line_description", ""), ("line_quantity", "1"), ("line_price", ""),
+        ("line_account_id", ""), ("line_tax_code", ""), ("line_tax_rate", "0"),
+    ];
+    let refused = b.submit("/sales-invoices", &[("invoice_number", ""), ("customer_id", cust.as_str())]).await;
+    assert!(refused.html.contains("invoice_number is required"));
+    let r = b.submit("/sales-invoices", &fields).await;
+    assert_eq!(r.status, StatusCode::SEE_OTHER, "{}", r.html);
+    let id = id_of(&r.location);
+    let detail = b.follow(r).await;
+    // D3: lines and totals, exact; D4: draft actions; D6: the PDF.
+    assert!(detail.html.contains("20.01") && detail.html.contains("Consulting"), "the line, with its money");
+    assert!(detail.html.contains(">Post<") && detail.html.contains(">Edit<") && detail.html.contains(">Delete<"));
+    assert!(detail.html.contains(&format!("href=\"/api/sales-invoices/{id}/pdf\"")));
+    assert!(detail.html.contains("draft, unpaid"));
+
+    // Edit: the form comes back filled.
+    let edit = b.get(&format!("/sales-invoices/{id}/edit")).await;
+    assert!(edit.html.contains("value=\"Consulting\"") && edit.html.contains("value=\"10.005\""));
+    fields[6] = ("line_quantity", "4");
+    let r = b.submit(&format!("/sales-invoices/{id}"), &fields).await;
+    assert!(b.follow(r).await.html.contains("40.02"));
+
+    // D4: posting; the entry is linked; refusals are shown beside the actions.
+    b.get(&format!("/sales-invoices/{id}")).await;
+    let r = b.submit(&format!("/sales-invoices/{id}/post"), &[]).await;
+    let posted = b.follow(r).await;
+    assert!(posted.html.contains("href=\"/journal-entries/") && posted.html.contains(">Unpost<"));
+    assert!(!posted.html.contains(">Edit<"));
+    let again = b.submit(&format!("/sales-invoices/{id}/post"), &[]).await;
+    assert!(again.html.contains("class=\"error\"") && again.html.contains("not a draft"));
+
+    // D7: email with email off says so; without an address on file, says that.
+    let r = b.submit(&format!("/sales-invoices/{id}/email"), &[("to", "")]).await;
+    assert!(r.html.contains("no email on file"), "{}", r.html);
+    let r = b.submit(&format!("/sales-invoices/{id}/email"), &[("to", "a@example.com")]).await;
+    assert!(r.html.contains("not configured") && r.html.contains("a@example.com"));
+
+    // P1 to P4: a payment, applied, and the invoice now paid in part.
+    let bank = common::account(&mut api, "asset").await.to_string();
+    b.get("/customer-payments/new").await;
+    let r = b.submit("/customer-payments", &[("customer_id", &cust), ("payment_date", &format!("{y}-04-01")), ("currency_code", "USD"),
+        ("amount", "15"), ("method", "transfer"), ("reference", "W1"), ("deposit_account_id", &bank)]).await;
+    let pay = id_of(&r.location);
+    b.follow(r).await;
+    let r = b.submit(&format!("/customer-payments/{pay}/post"), &[]).await;
+    b.follow(r).await;
+    let applied = b.submit(&format!("/customer-payments/{pay}/apply"), &[]).await;
+    assert!(applied.html.contains("Applied to 1 document(s).") && applied.html.contains(&format!("href=\"/sales-invoices/{id}\"")));
+    assert!(b.get(&format!("/sales-invoices/{id}")).await.html.contains("posted, partial"));
+    assert!(b.get("/customer-payments").await.html.contains("15.00"));
+
+    // G6: deleting asks first.
+    let draft = b.submit("/sales-invoices", &[("invoice_number", &code("INV")), ("customer_id", &cust), ("invoice_date", &date), ("currency_code", "USD")]).await;
+    let draft_id = id_of(&draft.location);
+    let ask = b.get(&format!("/sales-invoices/{draft_id}/delete")).await;
+    assert!(ask.html.contains("Delete invoice") && ask.html.contains("Keep it"));
+    let r = b.submit(&format!("/sales-invoices/{draft_id}/delete"), &[]).await;
+    assert_eq!(r.location.as_deref(), Some("/sales-invoices"));
+    assert_eq!(b.get(&format!("/sales-invoices/{draft_id}")).await.status, StatusCode::NOT_FOUND);
+}
+
+#[tokio::test]
+async fn ordinary_users_are_not_offered_unpost() {
+    let mut api = common::admin().await;
+    let y = common::open_year(&mut api).await;
+    let (cust, l) = common::party(&mut api, "customers").await;
+    let id = common::create(&mut api, "/api/sales-invoices", serde_json::json!({"invoice_number": code("INV"), "customer_id": cust,
+        "invoice_date": format!("{y}-02-01"), "currency_code": "USD", "lines": [{"description": "x", "unit_price": "5", "revenue_account_id": l.detail}]})).await;
+    api.send("POST", &format!("/api/sales-invoices/{id}/post"), None).await;
+    let pool = common::pool().await;
+    let email = common::email("plain");
+    common::user(&pool, &email, "plain password", false).await;
+    let mut b = Browser::sign_in(&email, "plain password").await;
+    assert!(!b.get(&format!("/sales-invoices/{id}")).await.html.contains(">Unpost<"));
+    let r = b.submit(&format!("/sales-invoices/{id}/unpost"), &[]).await;
+    assert!(r.html.contains("Only an administrator"));
+}

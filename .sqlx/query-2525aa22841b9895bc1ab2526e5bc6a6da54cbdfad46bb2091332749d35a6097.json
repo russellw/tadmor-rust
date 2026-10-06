@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT id, sku, name, COALESCE(description, name) AS \"description!\", unit_price::text AS \"unit_price!\",\n               tax_code, revenue_account_id, track_inventory\n           FROM products WHERE is_active ORDER BY sku",
+  "query": "SELECT id, sku, name, COALESCE(description, name) AS \"description!\", unit_price::text AS \"unit_price!\",\n               tax_code, revenue_account_id\n           FROM products WHERE is_active ORDER BY sku",
   "describe": {
     "columns": [
       {
@@ -37,11 +37,6 @@
         "ordinal": 6,
         "name": "revenue_account_id",
         "type_info": "Int4"
-      },
-      {
-        "ordinal": 7,
-        "name": "track_inventory",
-        "type_info": "Bool"
       }
     ],
     "parameters": {
@@ -54,9 +49,8 @@
       null,
       null,
       true,
-      true,
-      false
+      true
     ]
   },
-  "hash": "ae1322d82784848966b6015891cf01f12fbbeacee8b3271c85640a553276401e"
+  "hash": "2525aa22841b9895bc1ab2526e5bc6a6da54cbdfad46bb2091332749d35a6097"
 }

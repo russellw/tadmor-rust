@@ -1,0 +1,11 @@
+<tr class="line">
+<td><select name="line_product_id" class="product">{% for (v, l) in products %}<option value="{{ v }}"{% if *v == line.product_id %} selected{% endif %}>{{ l }}</option>{% endfor %}</select></td>
+<td><input type="text" name="line_description" class="desc wide" value="{{ line.description }}"></td>
+<td><input type="text" inputmode="decimal" name="line_quantity" class="qty num" value="{{ line.quantity }}"></td>
+<td><input type="text" inputmode="decimal" name="line_price" class="price num" value="{{ line.price }}"></td>
+<td><select name="line_account_id" class="account">{% for (v, l) in accounts %}<option value="{{ v }}"{% if *v == line.account_id %} selected{% endif %}>{{ l }}</option>{% endfor %}</select></td>
+<td><select name="line_tax_code" class="taxcode">{% for (v, l) in taxes %}<option value="{{ v }}"{% if *v == line.tax_code %} selected{% endif %}>{{ l }}</option>{% endfor %}</select></td>
+<td><input type="text" inputmode="decimal" name="line_tax_rate" class="rate num" value="{{ line.tax_rate }}"></td>
+<td class="num out-subtotal"></td><td class="num out-tax"></td><td class="num out-total"></td>
+<td><button type="button" class="remove link">remove</button></td>
+</tr>

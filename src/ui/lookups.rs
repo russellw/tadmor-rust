@@ -114,13 +114,12 @@ pub struct ProductChoice {
     pub unit_price: String,
     pub tax_code: Option<String>,
     pub revenue_account_id: Option<i32>,
-    pub track_inventory: bool,
 }
 
 pub async fn products(pool: &PgPool) -> Result<Vec<ProductChoice>> {
     Ok(sqlx::query!(
         r#"SELECT id, sku, name, COALESCE(description, name) AS "description!", unit_price::text AS "unit_price!",
-               tax_code, revenue_account_id, track_inventory
+               tax_code, revenue_account_id
            FROM products WHERE is_active ORDER BY sku"#
     )
     .fetch_all(pool)
@@ -133,7 +132,6 @@ pub async fn products(pool: &PgPool) -> Result<Vec<ProductChoice>> {
         unit_price: p.unit_price,
         tax_code: p.tax_code,
         revenue_account_id: p.revenue_account_id,
-        track_inventory: p.track_inventory,
     })
     .collect())
 }

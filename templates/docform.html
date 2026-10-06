@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post" action="{{ action }}" class="form wide" id="docform">
+<input type="hidden" name="_token" value="{{ chrome.token }}">
+<div class="header-fields">{% for f in fields %}{% call m::field(f, chrome.token) %}{% endcall %}{% endfor %}</div>
+<h2>Lines</h2>
+<table class="lines" id="lines">
+<thead><tr><th>Product</th><th>Description *</th><th class="num">Quantity</th><th class="num">{{ price_label }}</th><th>{{ account_label }}</th><th>Tax code</th><th class="num">Tax %</th><th class="num">Subtotal</th><th class="num">Tax</th><th class="num">Total</th><th></th></tr></thead>
+<tbody>
+{% for line in lines %}{% include "docline.html" %}{% endfor %}
+</tbody>
+<tfoot><tr><td colspan="7"><button type="button" id="add-line" class="button">Add line</button></td>
+<td class="num" id="sum-subtotal"></td><td class="num" id="sum-tax"></td><td class="num" id="sum-total"></td><td></td></tr></tfoot>
+</table>
+<template id="line-template">{% let line = blank %}{% include "docline.html" %}</template>
+<script type="application/json" id="client-data">{{ client_data|safe }}</script>
+<div class="actions"><button type="submit">{{ submit }}</button> <a href="{{ cancel }}">Cancel</a>
+{% if let Some(e) = error %}<p class="error" role="alert">{{ e }}</p>{% endif %}</div>
+</form>
+{% endblock %}
