@@ -1,0 +1,50 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT b.invoice_id AS \"id!\", b.invoice_number AS \"number!\", o.name AS \"party!\", b.due_date::text AS \"due!\",\n               b.currency_code::text AS \"currency!\", b.balance::numeric(19,4)::text AS \"balance!\"\n           FROM sales_invoice_balances b\n           JOIN customers c ON c.id = b.customer_id JOIN organizations o ON o.id = c.organization_id\n           WHERE b.status = 'posted' AND b.balance > 0 AND b.due_date < current_date\n           ORDER BY b.due_date, b.invoice_id LIMIT 10",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "number!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "party!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "due!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "currency!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "balance!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      true,
+      true,
+      false,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "e3245c34b63016ac80c0a3354cb935ba80c1fc184aba914e5721340210e255f2"
+}

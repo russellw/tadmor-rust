@@ -10,7 +10,7 @@ mod orders;
 mod payments;
 mod printing;
 mod reports;
-mod session;
+pub(crate) mod session;
 mod users;
 
 use axum::extract::State;
@@ -126,6 +126,7 @@ pub fn router(state: AppState) -> Router {
         .route("/healthz", get(healthz))
         .route("/readyz", get(readyz))
         .nest("/api", api)
+        .merge(crate::ui::router(state.clone()))
         .with_state(state)
 }
 

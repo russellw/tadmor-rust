@@ -19,7 +19,7 @@ const COOKIE_NAME: &str = "tadmor_session";
 /// The paths under /api/ that need no session.
 const PUBLIC: [&str; 2] = ["/auth/login", "/auth/logout"];
 
-fn session_token(headers: &HeaderMap) -> Option<String> {
+pub(crate) fn session_token(headers: &HeaderMap) -> Option<String> {
     headers
         .get_all(COOKIE)
         .iter()
@@ -32,11 +32,11 @@ fn session_token(headers: &HeaderMap) -> Option<String> {
 }
 
 /// Whether the client reached us over HTTPS, as the reverse proxy reports it.
-fn is_https(headers: &HeaderMap) -> bool {
+pub(crate) fn is_https(headers: &HeaderMap) -> bool {
     headers.get("x-forwarded-proto").is_some_and(|v| v.as_bytes().eq_ignore_ascii_case(b"https"))
 }
 
-fn session_cookie(value: &str, max_age: i64, secure: bool) -> HeaderValue {
+pub(crate) fn session_cookie(value: &str, max_age: i64, secure: bool) -> HeaderValue {
     let secure = if secure { "; Secure" } else { "" };
     HeaderValue::from_str(&format!("{COOKIE_NAME}={value}; Path=/; Max-Age={max_age}; HttpOnly; SameSite=Lax{secure}"))
         .expect("cookie is ASCII")

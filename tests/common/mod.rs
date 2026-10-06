@@ -208,3 +208,94 @@ pub async fn entry_lines(c: &mut Client, entry: i64) -> Vec<(i64, String, String
 pub fn line(account: i64, debit: &str, credit: &str) -> (i64, String, String, String, String) {
     (account, debit.into(), credit.into(), debit.into(), credit.into())
 }
+
+/// A browser-like client for the UI: it signs in through the login form,
+/// keeps the cookie, and reads each page's form token.
+pub struct Browser {
+    pub app: Router,
+    pub cookie: Option<String>,
+    pub token: String,
+}
+
+pub struct Page {
+    pub status: StatusCode,
+    pub location: Option<String>,
+    pub html: String,
+}
+
+impl Browser {
+    pub async fn sign_in(email: &str, password: &str) -> Browser {
+        let mut b = Browser { app: app().await, cookie: None, token: String::new() };
+        let r = b.submit("/login", &[("email", email), ("password", password), ("next", "/")]).await;
+        assert_eq!(r.status, StatusCode::SEE_OTHER, "signing in as {email}: {}", r.html);
+        b.get("/").await;
+        b
+    }
+
+    pub async fn admin() -> Browser {
+        let pool = pool().await;
+        let email = email("ui-admin");
+        user(&pool, &email, "admin password", true).await;
+        Browser::sign_in(&email, "admin password").await
+    }
+
+    async fn send(&mut self, req: Request<Body>) -> Page {
+        let response = self.app.clone().oneshot(req).await.unwrap();
+        let status = response.status();
+        for c in response.headers().get_all(SET_COOKIE) {
+            let pair = c.to_str().unwrap().split(';').next().unwrap().to_string();
+            self.cookie = if pair.ends_with('=') { None } else { Some(pair) };
+        }
+        let location = response.headers().get("location").map(|l| l.to_str().unwrap().to_string());
+        let bytes = to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let html = String::from_utf8_lossy(&bytes).into_owned();
+        if let Some(i) = html.find("name=\"_token\" value=\"") {
+            let rest = &html[i + 21..];
+            self.token = rest[..rest.find('"').unwrap()].to_string();
+        }
+        Page { status, location, html }
+    }
+
+    pub async fn get(&mut self, path: &str) -> Page {
+        let mut req = Request::get(path);
+        if let Some(c) = &self.cookie {
+            req = req.header(COOKIE, c);
+        }
+        self.send(req.body(Body::empty()).unwrap()).await
+    }
+
+    /// Posts a form as a browser would, with the page's token unless the
+    /// fields carry their own.
+    pub async fn submit(&mut self, path: &str, fields: &[(&str, &str)]) -> Page {
+        let mut pairs: Vec<(String, String)> = fields.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect();
+        if !self.token.is_empty() && !pairs.iter().any(|(k, _)| k == "_token") {
+            pairs.push(("_token".into(), self.token.clone()));
+        }
+        let body: String = pairs
+            .iter()
+            .map(|(k, v)| format!("{}={}", encode(k), encode(v)))
+            .collect::<Vec<_>>()
+            .join("&");
+        let mut req = Request::post(path).header(CONTENT_TYPE, "application/x-www-form-urlencoded");
+        if let Some(c) = &self.cookie {
+            req = req.header(COOKIE, c);
+        }
+        self.send(req.body(Body::from(body)).unwrap()).await
+    }
+
+    /// Follows a 303 to its page.
+    pub async fn follow(&mut self, page: Page) -> Page {
+        assert_eq!(page.status, StatusCode::SEE_OTHER, "expected a redirect: {}", page.html);
+        self.get(&page.location.unwrap()).await
+    }
+}
+
+fn encode(s: &str) -> String {
+    s.bytes()
+        .map(|b| match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => (b as char).to_string(),
+            b' ' => "+".to_string(),
+            _ => format!("%{b:02X}"),
+        })
+        .collect()
+}

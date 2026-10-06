@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT c.id, o.name AS \"name!\" FROM customers c JOIN organizations o ON o.id = c.organization_id\n               WHERE c.is_active ORDER BY o.name",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "name!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "ea6f49e1243a9a3ad72fbc3017ec96652789cd016e8703360ad03faacbce2c13"
+}

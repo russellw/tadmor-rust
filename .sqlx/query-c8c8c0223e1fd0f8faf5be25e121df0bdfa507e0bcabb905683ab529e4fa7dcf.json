@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT s.id, o.name AS \"name!\" FROM suppliers s JOIN organizations o ON o.id = s.organization_id\n               WHERE s.is_active ORDER BY o.name",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "name!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "c8c8c0223e1fd0f8faf5be25e121df0bdfa507e0bcabb905683ab529e4fa7dcf"
+}

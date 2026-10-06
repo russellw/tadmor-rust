@@ -1,0 +1,48 @@
+/* tadmor's only stylesheet. No inline styles: the Content Security Policy forbids them. */
+:root { --ink: #1d2433; --muted: #667085; --line: #d9dee7; --bg: #f6f7f9; --accent: #2f5bd3; --danger: #b42318; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font-size: 22px; margin: 0 0 16px; }
+h2 { font-size: 16px; margin: 24px 0 8px; }
+.top { display: flex; align-items: center; gap: 16px; padding: 10px 20px; background: #fff; border-bottom: 1px solid var(--line); }
+.top .brand { font-weight: 700; font-size: 16px; color: var(--ink); margin-right: auto; }
+.badge { font-size: 11px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 0 6px; color: var(--muted); }
+.shell { display: flex; min-height: calc(100vh - 45px); }
+nav.side { width: 210px; flex: none; padding: 12px 16px; background: #fff; border-right: 1px solid var(--line); }
+nav.side h4 { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+nav.side ul { list-style: none; margin: 0; padding: 0; }
+nav.side li a { display: block; padding: 2px 0; }
+main { flex: 1; padding: 20px 28px; min-width: 0; }
+table { border-collapse: collapse; width: 100%; background: #fff; border: 1px solid var(--line); margin-bottom: 12px; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; color: var(--muted); font-weight: 600; background: #fafbfc; }
+tfoot td { font-weight: 600; background: #fafbfc; }
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.empty { color: var(--muted); }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; background: #fff; border: 1px solid var(--line); padding: 12px 16px; margin: 0 0 12px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; }
+.facts dd.num { text-align: left; }
+.form { background: #fff; border: 1px solid var(--line); padding: 16px; max-width: 720px; margin-bottom: 12px; }
+.form.wide { max-width: none; }
+.field { display: block; margin-bottom: 10px; }
+.field > span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+.field small { color: var(--muted); }
+input, select, textarea { font: inherit; padding: 5px 8px; border: 1px solid #c5ccd8; border-radius: 4px; background: #fff; width: 100%; max-width: 420px; }
+input[type=checkbox] { width: auto; }
+input[readonly], select[disabled] { background: var(--bg); }
+.check { display: block; margin-bottom: 10px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 12px; }
+button, .button { font: inherit; padding: 5px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: #fff; cursor: pointer; display: inline-block; }
+.button { background: #fff; color: var(--accent); }
+button.danger, .button.danger { background: #fff; color: var(--danger); border-color: var(--danger); }
+button.link { background: none; border: none; color: var(--accent); padding: 0; }
+form.inline { display: inline; margin: 0; }
+.error { color: var(--danger); background: #fef3f2; border: 1px solid #fecdca; padding: 6px 10px; border-radius: 4px; margin: 4px 0; flex-basis: 100%; }
+body.login { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-box { width: 340px; }
+.lines input, .lines select { max-width: none; min-width: 60px; }
+.lines td { padding: 4px; }
+.lines .wide { min-width: 180px; }

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · tadmor</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body class="login">
+<form method="post" action="/login" class="form login-box">
+<h1>tadmor</h1>
+<input type="hidden" name="next" value="{{ next }}">
+<label class="field"><span>Email</span><input type="email" name="email" value="{{ email }}" autofocus required></label>
+<label class="field"><span>Password</span><input type="password" name="password" required></label>
+{% if let Some(e) = error %}<p class="error" role="alert">{{ e }}</p>{% endif %}
+<div class="actions"><button type="submit">Sign in</button></div>
+</form>
+</body>
+</html>

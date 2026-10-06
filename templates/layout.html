@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %} · tadmor</title>
+<link rel="stylesheet" href="/static/app.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/">tadmor</a>
+  <span class="user">{{ chrome.user_name }}{% if chrome.is_admin %} <span class="badge">admin</span>{% endif %}</span>
+  <form method="post" action="/logout" class="inline">
+    <input type="hidden" name="_token" value="{{ chrome.token }}">
+    <button type="submit" class="link">Sign out</button>
+  </form>
+</header>
+<div class="shell">
+<nav class="side">
+{% for group in chrome.nav %}
+  <h4>{{ group.title }}</h4>
+  <ul>{% for (label, href) in group.links %}<li><a href="{{ href }}">{{ label }}</a></li>{% endfor %}</ul>
+{% endfor %}
+</nav>
+<main>
+{% block content %}{% endblock %}
+</main>
+</div>
+</body>
+</html>

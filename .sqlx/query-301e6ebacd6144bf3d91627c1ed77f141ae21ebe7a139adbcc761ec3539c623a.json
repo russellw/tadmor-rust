@@ -1,0 +1,38 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT (SELECT count(*) FROM sales_orders WHERE status = 'open') AS \"sales_orders!\",\n                  (SELECT count(*) FROM purchase_orders WHERE status = 'open') AS \"purchase_orders!\",\n                  (SELECT count(*) FROM sales_invoices WHERE status = 'draft') AS \"draft_invoices!\",\n                  (SELECT count(*) FROM purchase_bills WHERE status = 'draft') AS \"draft_bills!\"",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "sales_orders!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "purchase_orders!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "draft_invoices!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "draft_bills!",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "301e6ebacd6144bf3d91627c1ed77f141ae21ebe7a139adbcc761ec3539c623a"
+}

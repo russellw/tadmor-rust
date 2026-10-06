@@ -1,0 +1,50 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT b.bill_id AS \"id!\", b.bill_number AS \"number!\", o.name AS \"party!\", b.due_date::text AS \"due!\",\n               b.currency_code::text AS \"currency!\", b.balance::numeric(19,4)::text AS \"balance!\"\n           FROM purchase_bill_balances b\n           JOIN suppliers s ON s.id = b.supplier_id JOIN organizations o ON o.id = s.organization_id\n           WHERE b.status = 'posted' AND b.balance > 0 AND b.due_date BETWEEN current_date AND current_date + 14\n           ORDER BY b.due_date, b.bill_id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "number!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "party!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "due!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "currency!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "balance!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      true,
+      true,
+      false,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "8dc76de11b59a9e5549434cfdb2fbb6e521ab4a1472c6f3a91f8107382ab4aaa"
+}

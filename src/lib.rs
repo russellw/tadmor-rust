@@ -28,5 +28,6 @@ pub mod posting;
 pub mod printing;
 pub mod reporting;
 pub mod settlement;
+pub mod ui;
 pub mod users;
 pub mod yearend;

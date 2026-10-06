@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+{% for section in sections %}
+{% match section %}
+{% when Section::Heading(text) %}<h2>{{ text }}</h2>
+{% when Section::Text(text) %}<p>{{ text }}</p>
+{% when Section::Error(text) %}<p class="error" role="alert">{{ text }}</p>
+{% when Section::Facts(facts) %}
+<dl class="facts">{% for (label, value) in facts %}<dt>{{ label }}</dt><dd{% if value.numeric %} class="num"{% endif %}>{% call m::cell(value) %}{% endcall %}</dd>{% endfor %}</dl>
+{% when Section::Table(table) %}
+{% if let Some(t) = table.title %}<h2>{{ t }}</h2>{% endif %}
+{% if table.rows.is_empty() %}<p class="empty">{{ table.empty }}</p>{% else %}
+<table>
+<thead><tr>{% for c in table.columns %}<th{% if c.numeric %} class="num"{% endif %}>{{ c.label }}</th>{% endfor %}</tr></thead>
+<tbody>{% for row in table.rows %}<tr>{% for c in row %}<td{% if c.numeric %} class="num"{% endif %}>{% call m::cell(c) %}{% endcall %}</td>{% endfor %}</tr>{% endfor %}</tbody>
+{% if let Some(footer) = table.footer %}<tfoot><tr>{% for c in footer %}<td{% if c.numeric %} class="num"{% endif %}>{% call m::cell(c) %}{% endcall %}</td>{% endfor %}</tr></tfoot>{% endif %}
+</table>
+{% endif %}
+{% when Section::Actions(actions, error) %}
+<div class="actions">
+{% for a in actions %}
+{% if a.post %}<form method="post" action="{{ a.href }}" class="inline"><input type="hidden" name="_token" value="{{ chrome.token }}">{% for (name, value) in a.hidden %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endfor %}<button type="submit"{% if a.danger %} class="danger"{% endif %}>{{ a.label }}</button></form>
+{% else %}<a class="button{% if a.danger %} danger{% endif %}" href="{{ a.href }}">{{ a.label }}</a>{% endif %}
+{% endfor %}
+{% if let Some(e) = error %}<p class="error" role="alert">{{ e }}</p>{% endif %}
+</div>
+{% when Section::Form(form) %}
+<form method="post" action="{{ form.action }}" class="form">
+<input type="hidden" name="_token" value="{{ chrome.token }}">
+{% for f in form.fields %}{% call m::field(f, chrome.token) %}{% endcall %}{% endfor %}
+<div class="actions"><button type="submit">{{ form.submit }}</button>{% if let Some(c) = form.cancel %} <a href="{{ c }}">Cancel</a>{% endif %}
+{% if let Some(e) = form.error %}<p class="error" role="alert">{{ e }}</p>{% endif %}</div>
+</form>
+{% endmatch %}
+{% endfor %}
+{% endblock %}

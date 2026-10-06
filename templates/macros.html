@@ -1,0 +1,22 @@
+{% macro cell(c) %}{% if let Some(href) = c.href %}<a href="{{ href }}">{{ c.text }}</a>{% else %}{{ c.text }}{% endif %}{% endmacro %}
+
+{% macro field(f, token) %}
+{% match f.kind %}
+{% when FieldKind::Hidden %}<input type="hidden" name="{{ f.name }}" value="{{ f.value }}">
+{% when FieldKind::Checkbox %}<label class="check"><input type="checkbox" name="{{ f.name }}" value="true"{% if f.checked() %} checked{% endif %}{% if f.readonly %} disabled{% endif %}> {{ f.label }}</label>
+{% else %}
+<label class="field"><span>{{ f.label }}{% if f.required %} *{% endif %}</span>
+{% match f.kind %}
+{% when FieldKind::Select %}<select name="{{ f.name }}"{% if f.readonly %} disabled{% endif %}>{% for (value, label) in f.options %}<option value="{{ value }}"{% if *value == f.value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% if f.readonly %}<input type="hidden" name="{{ f.name }}" value="{{ f.value }}">{% endif %}
+{% when FieldKind::TextArea %}<textarea name="{{ f.name }}" rows="4"{% if f.readonly %} readonly{% endif %}>{{ f.value }}</textarea>
+{% when FieldKind::Date %}<input type="date" name="{{ f.name }}" value="{{ f.value }}"{% if f.readonly %} readonly{% endif %}>
+{% when FieldKind::Password %}<input type="password" name="{{ f.name }}" autocomplete="new-password">
+{% when FieldKind::Email %}<input type="email" name="{{ f.name }}" value="{{ f.value }}"{% if f.readonly %} readonly{% endif %}>
+{% when FieldKind::Decimal %}<input type="text" inputmode="decimal" name="{{ f.name }}" value="{{ f.value }}"{% if f.readonly %} readonly{% endif %}>
+{% when FieldKind::Integer %}<input type="number" step="1" name="{{ f.name }}" value="{{ f.value }}"{% if f.readonly %} readonly{% endif %}>
+{% else %}<input type="text" name="{{ f.name }}" value="{{ f.value }}"{% if f.readonly %} readonly{% endif %}>
+{% endmatch %}
+{% if let Some(help) = f.help %}<small>{{ help }}</small>{% endif %}
+</label>
+{% endmatch %}
+{% endmacro %}
