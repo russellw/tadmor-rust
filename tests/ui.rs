@@ -207,3 +207,64 @@ async fn ordinary_users_are_not_offered_unpost() {
     let r = b.submit(&format!("/sales-invoices/{id}/unpost"), &[]).await;
     assert!(r.html.contains("Only an administrator"));
 }
+
+#[tokio::test]
+async fn an_order_through_its_fulfilment() {
+    let mut b = Browser::admin().await;
+    let mut api = common::admin().await;
+    let y = common::open_year(&mut api).await;
+    let (cust, l) = common::party(&mut api, "customers").await;
+    let inventory = common::account(&mut api, "asset").await;
+    let cogs = common::account(&mut api, "expense").await;
+    let product = common::create(&mut api, "/api/products", serde_json::json!({"sku": code("SKU"), "name": "Widget", "track_inventory": true,
+        "inventory_account_id": inventory, "cogs_account_id": cogs})).await.to_string();
+    let wh = common::create(&mut api, "/api/warehouses", serde_json::json!({"code": code("WH"), "name": "Main"})).await.to_string();
+    let (cust, income) = (cust.to_string(), l.detail.to_string());
+
+    // S2: a receipt typed as a magnitude.
+    b.get("/stock-movements/new").await;
+    let r = b.submit("/stock-movements", &[("product_id", &product), ("warehouse_id", &wh), ("movement_type", "receipt"),
+        ("movement_date", &format!("{y}-01-02")), ("quantity", "10"), ("unit_cost", "4")]).await;
+    let receipt = b.follow(r).await;
+    assert!(receipt.html.contains("Account to credit"), "a receipt asks for the account to credit");
+    // An issue typed as a magnitude is stored negative.
+    let r = b.submit("/stock-movements", &[("product_id", &product), ("warehouse_id", &wh), ("movement_type", "issue"), ("quantity", "1"), ("unit_cost", "4")]).await;
+    let issue = b.follow(r).await;
+    assert!(issue.html.contains("-1"), "{}", issue.html);
+
+    // O2: the order form is the line editor.
+    b.get("/sales-orders/new").await;
+    let number = code("SO");
+    let date = format!("{y}-01-10");
+    let r = b.submit("/sales-orders", &[("order_number", &number), ("customer_id", &cust), ("order_date", &date), ("currency_code", "USD"),
+        ("line_product_id", &product), ("line_description", "Widgets"), ("line_quantity", "6"), ("line_price", "20"),
+        ("line_account_id", &income), ("line_tax_code", ""), ("line_tax_rate", "0")]).await;
+    let so = id_of(&r.location);
+    let draft = b.follow(r).await;
+    assert!(draft.html.contains(">Confirm<") && draft.html.contains("120.00"));
+    let r = b.submit(&format!("/sales-orders/{so}/confirm"), &[]).await;
+    let open = b.follow(r).await;
+    assert!(open.html.contains(">Invoice<") && open.html.contains(">Ship<") && open.html.contains(">Close<"));
+
+    // O5: the invoice form offers the remainder, lowerable.
+    let form = b.get(&format!("/sales-orders/{so}/invoice")).await;
+    assert!(form.html.contains("Widgets (6 remaining)") && form.html.contains("name=\"line_quantity\" value=\"6\""));
+    let at = form.html.find("name=\"line_order_line_id\" value=\"").unwrap() + 33;
+    let line = form.html[at..at + form.html[at..].find('"').unwrap()].to_string();
+    let r = b.submit(&format!("/sales-orders/{so}/invoice"), &[("invoice_number", &code("INV")), ("invoice_date", &format!("{y}-01-11")),
+        ("line_order_line_id", &line), ("line_quantity", "2")]).await;
+    assert!(r.location.as_deref().unwrap().starts_with("/sales-invoices/"), "on to the new draft");
+    let invoice = b.follow(r).await;
+    assert!(invoice.html.contains("40.00") && invoice.html.contains("produced from an order"));
+    assert!(b.get(&format!("/sales-orders/{so}")).await.html.contains("partial"));
+
+    // O6: shipping links to the movements it made.
+    let r = b.submit(&format!("/sales-orders/{so}/ship"), &[("warehouse_id", &wh), ("movement_date", &format!("{y}-01-15")),
+        ("line_order_line_id", &line), ("line_quantity", "6")]).await;
+    assert!(r.html.contains("Draft movements created") && r.html.contains("href=\"/stock-movements/"));
+    assert!(b.get(&format!("/sales-orders/{so}")).await.html.contains("shipped"));
+    // O4: a fulfilled order cannot be cancelled, and says why.
+    let r = b.submit(&format!("/sales-orders/{so}/cancel"), &[]).await;
+    assert!(r.html.contains("partly fulfilled"));
+    assert!(b.get("/sales-orders").await.html.contains(&number));
+}
